@@ -1,10 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Title</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Profile</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
+
 <body>
 
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo-area">
+
+            <div class="logo-text">
+
+                <strong>Cape Peninsula</strong>
+                <strong>University of Technology</strong>
+
+                <small>A PLACE TO BELONG</small>
+
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="homepage.html"
+               class="nav-item">
+
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="profile.html"
+               class="nav-item active">
+
+                <span class="nav-icon">◎</span>
+                <span>Profile</span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">▣</span>
+                <span>Listings</span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">▤</span>
+                <span>Messages</span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">🛒</span>
+                <span>Marketplace</span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">▥</span>
+                <span>Merch store</span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">📢</span>
+                <span>Announcements</span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="top-header">
+
+            <div class="header-left">
+
+                <button class="menu-button">
+                    ☰
+                </button>
+
+                <h1>Profile</h1>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <div class="search-box">
+
+                    <span>⌕</span>
+
+                    <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search">
+
+                </div>
+
+
+                <button class="notification-button">
+                    🔔
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- BLUE HEADER STRIP -->
+
+        <div class="blue-line"></div>
+
+
+        <!-- PROFILE CONTENT -->
+
+        <section class="profile-content">
+
+
+            <!-- PROFILE HEADER -->
+
+            <div class="profile-header">
+
+                <div class="profile-image">
+
+                    <span>👩🏽</span>
+
+                </div>
+
+
+                <div class="profile-name">
+
+                    <h2 id="studentName">
+                        Lerato Dlamini
+                    </h2>
+
+                    <p>
+
+                        <span class="online-dot"></span>
+
+                        Student | Computer Science
+
+                    </p>
+
+
+                    <span class="year-badge">
+                        3rd Year
+                    </span>
+
+                </div>
+
+
+                <div class="profile-actions">
+
+                    <button
+                            class="edit-button"
+                            onclick="editProfile()">
+
+                        Edit Profile
+
+                    </button>
+
+
+                    <button
+                            class="save-button"
+                            onclick="saveProfile()">
+
+                        Save
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ABOUT ME -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <span class="title-icon">
+                        👤
+                    </span>
+
+                    <h3>
+                        About Me
+                    </h3>
+
+                </div>
+
+
+                <p class="about-text">
+
+                    Passionate about technology and problem solving.
+                    I enjoy building innovative solutions and learning
+                    new things every day.
+
+                </p>
+
+
+                <div class="details-grid">
+
+
+                    <div class="detail-row">
+
+                        <span class="detail-icon">
+                            🏫
+                        </span>
+
+                        <span class="detail-label">
+                            University
+                        </span>
+
+                        <span class="detail-value">
+                            Cape Peninsula University of Technology
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span class="detail-icon">
+                            📚
+                        </span>
+
+                        <span class="detail-label">
+                            Faculty
+                        </span>
+
+                        <span class="detail-value">
+                            Informatics & Design
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span class="detail-icon">
+                            🎓
+                        </span>
+
+                        <span class="detail-label">
+                            Year Level
+                        </span>
+
+                        <span class="detail-value">
+                            3rd Year
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span class="detail-icon">
+                            🪪
+                        </span>
+
+                        <span class="detail-label">
+                            Student ID
+                        </span>
+
+                        <span class="detail-value">
+                            219045678
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span class="detail-icon">
+                            📅
+                        </span>
+
+                        <span class="detail-label">
+                            Member Since
+                        </span>
+
+                        <span class="detail-value">
+                            12 Aug 2022
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span class="detail-icon">
+                            ▣
+                        </span>
+
+                        <span class="detail-label">
+                            Profile ID
+                        </span>
+
+                        <span class="detail-value">
+                            PR-001245
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span class="detail-icon">
+                            ◷
+                        </span>
+
+                        <span class="detail-label">
+                            Created At
+                        </span>
+
+                        <span class="detail-value">
+                            12 Aug 2022, 10:30 AM
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-row">
+
+                        <span class="detail-icon">
+                            ◷
+                        </span>
+
+                        <span class="detail-label">
+                            Updated At
+                        </span>
+
+                        <span class="detail-value">
+                            02 May 2024, 09:15 AM
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROFILE OVERVIEW -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <span class="title-icon">
+                        📊
+                    </span>
+
+                    <h3>
+                        Profile Overview
+                    </h3>
+
+                </div>
+
+
+                <div class="overview-item">
+
+                    <div class="overview-icon blue">
+                        📖
+                    </div>
+
+                    <div>
+
+                        <span class="overview-number">
+                            5
+                        </span>
+
+                        <span class="overview-label">
+                            Courses Enrolled
+                        </span>
+
+                    </div>
+
+                    <span class="arrow">
+                        ›
+                    </span>
+
+                </div>
+
+
+                <div class="overview-item">
+
+                    <div class="overview-icon purple">
+                        ▣
+                    </div>
+
+                    <div>
+
+                        <span class="overview-number">
+                            12
+                        </span>
+
+                        <span class="overview-label">
+                            Assignments
+                        </span>
+
+                    </div>
+
+                    <span class="arrow">
+                        ›
+                    </span>
+
+                </div>
+
+
+                <div class="overview-item">
+
+                    <div class="overview-icon green">
+                        %
+                    </div>
+
+                    <div>
+
+                        <span class="overview-number">
+                            78%
+                        </span>
+
+                        <span class="overview-label">
+                            Average Grade
+                        </span>
+
+                    </div>
+
+                    <span class="arrow">
+                        ›
+                    </span>
+
+                </div>
+
+
+                <div class="overview-item">
+
+                    <div class="overview-icon orange">
+                        🔔
+                    </div>
+
+                    <div>
+
+                        <span class="overview-number">
+                            3
+                        </span>
+
+                        <span class="overview-label">
+                            Unread Notifications
+                        </span>
+
+                    </div>
+
+                    <span class="arrow">
+                        ›
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- BADGES -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <span class="title-icon">
+                        🏅
+                    </span>
+
+                    <h3>
+                        Badges
+                    </h3>
+
+                </div>
+
+
+                <div class="badges">
+
+
+                    <div class="badge">
+
+                        <div class="badge-circle blue-badge">
+                            ★
+                        </div>
+
+                        <span>
+                            Problem Solver
+                        </span>
+
+                    </div>
+
+
+                    <div class="badge">
+
+                        <div class="badge-circle purple-badge">
+                            ★
+                        </div>
+
+                        <span>
+                            Team Player
+                        </span>
+
+                    </div>
+
+
+                    <div class="badge">
+
+                        <div class="badge-circle green-badge">
+                            ★
+                        </div>
+
+                        <span>
+                            Tech Enthusiast
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="js/script.js"></script>
+
 </body>
+
 </html>
