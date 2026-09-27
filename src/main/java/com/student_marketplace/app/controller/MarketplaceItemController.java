@@ -72,8 +72,3 @@ import java.util.List;
         }
 
     }
-
-//        public void goToMerchStore() {
-//            merchController.openMerchStore();
-//        }
-//    }
