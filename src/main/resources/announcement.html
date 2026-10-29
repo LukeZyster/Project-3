@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Announcements | CPUT Marketplace</title>
+
+    <link rel="stylesheet" href="announcements.css">
+
+</head>
+
+<body>
+
+<!-- Top Header -->
+<header class="top-header">
+
+    <div class="header-left">
+
+        <span class="menu-icon">☰</span>
+
+        <span class="logo">
+                CPUT Marketplace
+            </span>
+
+    </div>
+
+    <div class="search-icon">
+        ⌕
+    </div>
+
+</header>
+
+
+<!-- Main Content -->
+<main class="main-content">
+
+
+    <!-- Search Bar -->
+    <div class="search-container">
+
+        <span class="search-symbol">⌕</span>
+
+        <input
+                type="text"
+                id="searchAnnouncement"
+                placeholder="Search news or events..."
+        >
+
+    </div>
+
+
+    <!-- Categories -->
+    <div class="categories">
+
+        <button class="category active" data-category="all">
+            All
+        </button>
+
+        <button class="category" data-category="campus">
+            Campus News
+        </button>
+
+        <button class="category" data-category="career">
+            Career
+        </button>
+
+        <button class="category" data-category="sports">
+            Sports
+        </button>
+
+        <button class="category" data-category="events">
+            Events
+        </button>
+
+    </div>
+
+
+    <!-- Featured Announcement -->
+    <section class="featured-section">
+
+        <div class="featured-card">
+
+            <img
+                    src="images/campus-building.jpg"
+                    alt="Campus building"
+                    class="featured-image"
+            >
+
+            <div class="featured-overlay">
+
+                    <span class="critical-label">
+                        CRITICAL UPDATE
+                    </span>
+
+                <h1>
+                    2024 Late Registration Now Open
+                </h1>
+
+                <p>
+                    Ensure your placement for the upcoming semester.
+                    Final deadline is February 28th. Check your student
+                    portal for more information.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Latest Announcements -->
+    <section class="announcements-section">
+
+        <div class="section-title">
+
+            <h2>
+                Latest Announcements
+            </h2>
+
+        </div>
+
+
+        <div id="announcementList" class="announcement-list">
+
+
+            <!-- Announcement 1 -->
+            <article
+                    class="announcement-card"
+                    data-category="campus"
+            >
+
+                <div class="announcement-icon navy-icon">
+                    📢
+                </div>
+
+                <div class="announcement-info">
+
+                    <h3>
+                        New CPUT March Drop!
+                    </h3>
+
+                    <p>
+                        The latest official university hoodies and
+                        caps have arrived at the campus store.
+                        Student discounts...
+                    </p>
+
+                    <span class="announcement-time">
+                            2 hours ago
+                        </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- Announcement 2 -->
+            <article
+                    class="announcement-card"
+                    data-category="campus"
+            >
+
+                <div class="announcement-icon blue-icon">
+                    🎓
+                </div>
+
+                <div class="announcement-info">
+
+                    <h3>
+                        Mid-Year Study Materials Drive
+                    </h3>
+
+                    <p>
+                        Donate or find affordable second-hand
+                        textbooks and equipment for the upcoming
+                        finals at the main...
+                    </p>
+
+                    <span class="announcement-time">
+                            Yesterday
+                        </span>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+
+        <!-- No Results -->
+        <div
+                id="noAnnouncements"
+                class="no-announcements"
+        >
+
+            <p>
+                No announcements found.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Campus Events -->
+    <section class="events-section">
+
+        <div class="section-title event-title">
+
+            <h2>
+                Campus Events
+            </h2>
+
+            <a href="#" class="calendar-link">
+                View Calendar
+            </a>
+
+        </div>
+
+
+        <div class="events-container">
+
+
+            <!-- Event 1 -->
+            <article class="event-card">
+
+                <img
+                        src="images/tech-expo.jpg"
+                        alt="Annual Tech Expo"
+                        class="event-image"
+                >
+
+                <div class="event-details">
+
+                    <div class="event-date">
+
+                            <span class="month">
+                                MAR
+                            </span>
+
+                        <span class="day">
+                                15
+                            </span>
+
+                    </div>
+
+
+                    <div class="event-info">
+
+                        <h3>
+                            Annual Tech Expo
+                        </h3>
+
+                        <p>
+                            📍 Bellville Campus
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button class="event-button">
+                    Join Event
+                </button>
+
+            </article>
+
+
+            <!-- Event 2 -->
+            <article class="event-card">
+
+                <img
+                        src="images/career-fair.jpg"
+                        alt="Industry Career Fair"
+                        class="event-image"
+                >
+
+                <div class="event-details">
+
+                    <div class="event-date">
+
+                            <span class="month">
+                                MAR
+                            </span>
+
+                        <span class="day">
+                                22
+                            </span>
+
+                    </div>
+
+
+                    <div class="event-info">
+
+                        <h3>
+                            Industry Career Fair
+                        </h3>
+
+                        <p>
+                            📍 District Six Campus
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button class="event-button remind">
+                    Remind Me
+                </button>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- Footer -->
+<footer class="footer">
+
+    <h2>
+        CPUT Marketplace
+    </h2>
+
+    <p>
+        Empowering student commerce since 2024.
+    </p>
+
+    <div class="footer-links">
+
+        <a href="#">
+            About Us
+        </a>
+
+        <a href="#">
+            Help Center
+        </a>
+
+        <a href="#">
+            Terms
+        </a>
+
+        <a href="#">
+            Privacy
+        </a>
+
+    </div>
+
+    <p class="copyright">
+        © 2024 CPUT Marketplace. All rights reserved.
+    </p>
+
+</footer>
+
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+
+    <a href="marketplace.html">
+
+            <span class="nav-icon">
+                🛍
+            </span>
+
+        <span>
+                Store
+            </span>
+
+    </a>
+
+
+    <a href="chat.html">
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+        <span>
+                Chat
+            </span>
+
+    </a>
+
+
+    <a href="sell.html">
+
+            <span class="sell-icon">
+                ＋
+            </span>
+
+        <span>
+                Sell
+            </span>
+
+    </a>
+
+
+    <a href="profile.html">
+
+            <span class="nav-icon">
+                ♙
+            </span>
+
+        <span>
+                Account
+            </span>
+
+    </a>
+
+</nav>
+
+
+<script src="announcements.js"></script>
+
+</body>
+
+</html>
