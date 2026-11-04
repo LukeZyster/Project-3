@@ -1,0 +1,277 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f7fa;
+    color: #172033;
+}
+
+.login-wrap {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+    gap: 14px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 360px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px 28px 26px;
+    box-shadow: 0 10px 30px rgba(16, 26, 48, 0.10);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.brand-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: #101a30;
+    font-size: 15px;
+}
+
+.brand-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: #101a30;
+}
+
+h1 {
+    font-size: 22px;
+    color: #101a30;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: #6c7482;
+    font-size: 13.5px;
+    margin-bottom: 22px;
+}
+
+label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #6c7482;
+    margin: 16px 0 6px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #d9dfe7;
+    border-radius: 8px;
+    padding: 0 12px;
+    background: #fbfcfe;
+}
+
+.input-group input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 11px 8px;
+    font-size: 14px;
+    color: #172033;
+}
+
+.input-icon {
+    color: #9aa3b2;
+    font-size: 14px;
+}
+
+.toggle-visibility {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    color: #9aa3b2;
+    padding: 4px;
+}
+
+.input-group.has-error {
+    border-color: #e0554f;
+}
+
+.field-error {
+    display: none;
+    color: #c0392b;
+    font-size: 12.5px;
+    margin-top: 6px;
+}
+
+.field-error.show {
+    display: block;
+}
+
+.form-footer-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.form-footer-row a,
+.register-row a {
+    color: #3487b0;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-footer-row a:hover,
+.register-row a:hover {
+    text-decoration: underline;
+}
+
+.banner {
+    display: none;
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.banner.show {
+    display: block;
+}
+
+.banner.error {
+    background: #fdecea;
+    border: 1px solid #f2b8b5;
+    color: #c0392b;
+}
+
+.banner.success {
+    background: #e8f7ef;
+    border: 1px solid #a7e3c1;
+    color: #1e8a4c;
+}
+
+.sign-in-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #58b9d7;
+    color: #0b1524;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.sign-in-btn:hover {
+    background: #45aecf;
+}
+
+.sign-in-btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.register-row {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #6c7482;
+}
+
+.verified-row {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 11.5px;
+    color: #9aa3b2;
+}
+
+.footer-note {
+    color: #8d95a1;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* ---------------- QA PANEL ---------------- */
+
+.qa-panel {
+    width: 100%;
+    max-width: 420px;
+    background: #101a30;
+    color: #e3e8f0;
+    border-radius: 14px;
+    padding: 18px 20px 22px;
+}
+
+.qa-panel h2 {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.qa-panel h3 {
+    font-size: 12.5px;
+    margin: 14px 0 6px;
+    color: #a9b2c3;
+}
+
+.qa-panel p {
+    font-size: 12px;
+    color: #a9b2c3;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.qa-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.qa-grid button {
+    flex: 1;
+    min-width: 140px;
+    background: #1c2b48;
+    color: #cfe3ee;
+    border: 1px solid #2b3c5c;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.qa-grid button:hover {
+    background: #24365a;
+}
+
+.console-note {
+    display: none;
+    margin-top: 12px;
+    background: #0a1120;
+    color: #86efac;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11.5px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+}
+
+.console-note.show {
+    display: block;
+}

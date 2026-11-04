@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal — Sign In</title>
+
+    <link rel="stylesheet" href="css/login.css">
+
+</head>
+<body>
+
+<main class="login-wrap">
+
+    <div class="login-card">
+
+        <div class="brand">
+            <span class="brand-icon">🎓</span>
+            <span class="brand-name">Campus Portal</span>
+        </div>
+
+        <h1>Student Portal</h1>
+        <p class="subtitle">Sign into your account</p>
+
+        <form id="loginForm" novalidate>
+
+            <label for="email">Sign in with your email</label>
+            <div class="input-group">
+                <span class="input-icon">👤</span>
+                <input type="text" id="email" name="email" placeholder="e.g. s220343527@campus.edu" autocomplete="username">
+            </div>
+            <div class="field-error" id="email-error"></div>
+
+            <label for="password">Enter your password</label>
+            <div class="input-group">
+                <span class="input-icon">🔒</span>
+                <input type="password" id="password" name="password" placeholder="••••••••••" autocomplete="current-password">
+                <button type="button" class="toggle-visibility" id="toggleVisibility" aria-label="Show password">👁</button>
+            </div>
+            <div class="field-error" id="password-error"></div>
+
+            <div class="form-footer-row">
+                <a href="#" id="forgotPassword">Forgot Password?</a>
+            </div>
+
+            <div class="banner" id="formBanner"></div>
+
+            <button type="submit" class="sign-in-btn" id="signInBtn">Sign In &rarr;</button>
+
+            <p class="register-row">New to the Portal? <a href="register.html">Register Now</a></p>
+
+            <p class="verified-row">🛡 Verified Secure</p>
+
+        </form>
+
+    </div>
+
+    <p class="footer-note">Campus Portal &copy; 2026 Campus Portal. Academic Excellence</p>
+
+    <!-- ============================================================
+         QA / TESTING EVIDENCE PANEL
+         Set QA_MODE = false in js/login.js before final submission
+         to hide this panel from the graded build.
+         Each button re-uses the real handleLogin() code path so the
+         screenshots reflect genuine application behaviour.
+    ============================================================= -->
+    <section class="qa-panel" id="qaPanel">
+        <h2>QA — Quick Test Scenarios</h2>
+        <p>Each button fills the form and submits it through the real login handler, for consistent, repeatable screenshots.</p>
+        <div class="qa-grid">
+            <button data-scenario="tc01">TC-01 Valid login</button>
+            <button data-scenario="tc02">TC-02 Empty email</button>
+            <button data-scenario="tc03">TC-03 Invalid email format</button>
+            <button data-scenario="tc04">TC-04 Empty password</button>
+            <button data-scenario="tc05">TC-05 Wrong password</button>
+            <button data-scenario="tc09">TC-09 Suspended account</button>
+            <button data-scenario="tc10">TC-10 Too many attempts</button>
+        </div>
+        <h3>Runtime / network errors (see console)</h3>
+        <div class="qa-grid">
+            <button data-scenario="runtime-null">Null DOM reference</button>
+            <button data-scenario="network-down">Server unavailable (500)</button>
+        </div>
+        <div class="console-note" id="qaConsole"></div>
+    </section>
+
+</main>
+
+<script src="js/login.js"></script>
+</body>
+</html>
