@@ -1,18 +1,45 @@
-document.getElementById('registerForm')?.addEventListener('submit', event => {
-	event.preventDefault();
-	const name = document.getElementById('registerName').value.trim();
-	const email = document.getElementById('registerEmail').value.trim();
-	const message = document.getElementById('registerMessage');
-
-	setCurrentUser({
-		id: 2,
-		name: name || (email ? email.split('@')[0] : 'Student'),
-		email,
-		role: 'USER'
-	});
-
-	message.textContent = 'Account created. Taking you to your profile...';
-	setTimeout(() => {
-		window.location.href = 'profile.html';
-	}, 250);
-});
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketplace — StudentMarket</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="site-page">
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a>
+    <nav class="site-links" aria-label="Primary navigation">
+      <a href="merch.html">Store</a><a href="marketplace.html">Marketplace</a><a href="chat.html">Messages</a><a href="profile.html">Account</a><a href="notification.html" data-notifications-link>Notifications</a>
+    </nav>
+  </header>
+  <main class="marketplace-shell">
+    <section class="marketplace-hero">
+      <div><p class="eyebrow">Campus marketplace</p><h1>Buy and sell what students actually need.</h1><p class="hero-text">Find textbooks, appliances, furniture, tech, and other student essentials. The campus merch store is part of the wider marketplace.</p></div>
+      <div class="hero-actions"><a class="button button-primary" href="sell.html">＋ List an item</a><a class="button button-secondary" href="merch.html">Browse merch store</a></div>
+    </section>
+    <section class="marketplace-controls" aria-label="Search and filter listings">
+      <label class="market-search-label" for="marketSearch">Search listings</label>
+      <input id="marketSearch" class="market-search" type="search" placeholder="Try textbooks, a kettle, or a desk" autocomplete="off">
+      <div class="marketplace-pills" aria-label="Filter by category">
+        <button class="market-pill active" type="button" data-category="All">All items</button>
+        <button class="market-pill" type="button" data-category="Textbooks">Textbooks</button>
+        <button class="market-pill" type="button" data-category="Appliances">Appliances</button>
+        <button class="market-pill" type="button" data-category="Furniture">Furniture</button>
+        <button class="market-pill" type="button" data-category="Tech">Tech</button>
+        <button class="market-pill" type="button" data-category="Other">Other</button>
+        <button class="market-pill" type="button" data-category="Merch">Merch</button>
+      </div>
+    </section>
+    <section class="market-section">
+      <div class="section-header"><div><p class="eyebrow">For students, by students</p><h2>Latest listings</h2></div><span id="listingCount" class="listing-count" aria-live="polite"></span></div>
+      <div class="listing-grid" id="marketListingGrid" aria-live="polite"></div>
+      <p class="empty-state" id="marketEmptyState" hidden>No listings match your search yet. Try another category or list the first item.</p>
+    </section>
+    <section class="market-section merch-callout"><div><p class="eyebrow">Official campus gear</p><h2>Looking for hoodies, caps, or mugs?</h2><p>Visit the smaller StudentMarket merch store for official campus essentials.</p></div><a class="button button-primary" href="merch.html">Visit the merch store</a></section>
+  </main>
+  <footer class="site-footer"><span>StudentMarket</span><a href="index.html">Back to home</a></footer>
+  <script src="js/auth.js"></script>
+  <script src="js/marketplace.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List an item — StudentMarket</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="site-page">
+  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><nav class="site-links" aria-label="Primary navigation"><a href="marketplace.html">Marketplace</a><a href="merch.html">Store</a><a href="profile.html">Account</a></nav></header>
+  <main class="sell-page">
+    <section class="sell-intro"><p class="eyebrow">Sell on campus</p><h1>Give your student essentials a new home.</h1><p class="hero-text">Create a listing for textbooks, appliances, furniture, tech, or other student items.</p></section>
+    <p id="sellAuthNotice" class="form-message" role="status" hidden></p>
+    <form class="auth-card sell-form" id="sellForm">
+      <label>Item name<input name="name" required maxlength="80" placeholder="e.g. First-year accounting textbook"></label>
+      <div class="form-row"><label>Category<select name="category" required><option value="">Choose a category</option><option>Textbooks</option><option>Appliances</option><option>Furniture</option><option>Tech</option><option>Other</option></select></label><label>Price (R)<input name="price" type="number" min="1" max="1000000" step="0.01" required placeholder="250.00"></label></div>
+      <div class="form-row"><label>Condition<select name="condition" required><option value="">Choose condition</option><option>New</option><option>Like new</option><option>Good</option><option>Used</option><option>Needs repair</option></select></label><label>Campus / pickup location<input name="campus" required maxlength="80" placeholder="e.g. Bellville Campus"></label></div>
+      <label>Description<textarea name="description" rows="4" required maxlength="500" placeholder="Describe the item and its condition."></textarea></label>
+      <label>Image URL (optional)<input name="imageUrl" type="url" maxlength="500" placeholder="https://..."></label>
+      <p id="sellMessage" class="form-message" role="status"></p>
+      <button class="button button-primary" type="submit">Publish listing</button>
+    </form>
+  </main>
+  <footer class="site-footer"><span>StudentMarket</span><a href="marketplace.html">Back to marketplace</a></footer>
+  <script src="js/auth.js"></script><script src="js/sell.js"></script>
+</body>
+</html>

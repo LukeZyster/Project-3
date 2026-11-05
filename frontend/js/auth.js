@@ -1,3 +1,4 @@
+// Auth and browser-local demo persistence helpers.
 const AUTH_KEY = 'studentMarketUser';
 const STORAGE_KEYS = {
   profile: 'studentMarketProfile',
@@ -17,6 +18,18 @@ function getCurrentUser() {
   }
 }
 
+function getStoredProfile() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEYS.profile) || '{}');
+  } catch (error) {
+    return {};
+  }
+}
+
+function setStoredProfile(profile) {
+  localStorage.setItem(STORAGE_KEYS.profile, JSON.stringify(profile));
+}
+
 function setCurrentUser(user) {
   const safeUser = {
     id: user && user.id ? user.id : Date.now(),
@@ -27,22 +40,13 @@ function setCurrentUser(user) {
   };
   localStorage.setItem(AUTH_KEY, JSON.stringify(safeUser));
   const profile = getStoredProfile();
-  const nextProfile = {
+  setStoredProfile({
     ...profile,
     name: safeUser.name,
     email: safeUser.email,
     accountType: safeUser.role === 'ADMIN' ? 'Administrator' : 'Student account',
-    bankHolder: safeUser.name
-  };
-  localStorage.setItem(STORAGE_KEYS.profile, JSON.stringify(nextProfile));
-}
-
-function getStoredProfile() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS.profile) || '{}');
-  } catch (error) {
-    return {};
-  }
+    bankHolder: profile.bankHolder || safeUser.name
+  });
 }
 
 function isLoggedIn() {
@@ -56,11 +60,9 @@ function redirectAfterAuth() {
 function hideSignedOutAuthLinks() {
   const user = getCurrentUser();
   if (!user) return;
-
   document.querySelectorAll('a[href="login.html"], a[href="register.html"]').forEach(link => {
     link.style.display = 'none';
   });
-
   document.querySelectorAll('[data-auth-link]').forEach(authLink => {
     authLink.textContent = 'My account';
     authLink.href = 'profile.html';
@@ -69,25 +71,17 @@ function hideSignedOutAuthLinks() {
 }
 
 function redirectAuthenticatedUsersAwayFromAuthPages() {
-  const user = getCurrentUser();
-  if (!user) return;
+  if (!getCurrentUser()) return;
   const path = window.location.pathname.split('/').pop() || '';
-  if (path === 'login.html' || path === 'register.html') {
-    window.location.replace('profile.html');
-  }
+  if (path === 'login.html' || path === 'register.html') window.location.replace('profile.html');
 }
 
 function addNotificationsLink() {
-  const existingLinks = [...document.querySelectorAll(
-    'a[href="notification.html"], a[data-notifications-link]'
-  )];
+  const existingLinks = [...document.querySelectorAll('a[href="notification.html"], a[data-notifications-link]')];
   const siteNav = document.querySelector('.site-links');
   const appHeader = document.querySelector('.app-header');
   let link = existingLinks.find(item => siteNav && siteNav.contains(item)) || existingLinks[0];
-
-  existingLinks.forEach(item => {
-    if (item !== link) item.remove();
-  });
+  existingLinks.forEach(item => { if (item !== link) item.remove(); });
 
   if (!link) {
     const parent = siteNav || appHeader;
@@ -95,9 +89,8 @@ function addNotificationsLink() {
       link = document.createElement('a');
       link.href = 'notification.html';
       link.dataset.notificationsLink = '';
-      if (siteNav) {
-        link.textContent = 'Notifications';
-      } else {
+      if (siteNav) link.textContent = 'Notifications';
+      else {
         link.className = 'icon-btn notification-link';
         link.setAttribute('aria-label', 'Notifications');
         link.textContent = '🔔';
@@ -106,43 +99,33 @@ function addNotificationsLink() {
     }
   }
 
-  if (link) {
-    link.dataset.notificationsLink = '';
-    if (!link.querySelector('[data-notification-count]')) {
-      const badge = document.createElement('span');
-      badge.className = 'notification-count';
-      badge.dataset.notificationCount = '';
-      badge.hidden = true;
-      link.append(badge);
-    }
+  if (link && !link.querySelector('[data-notification-count]')) {
+    const badge = document.createElement('span');
+    badge.className = 'notification-count';
+    badge.dataset.notificationCount = '';
+    badge.hidden = true;
+    link.append(badge);
   }
 
   const user = getCurrentUser();
   document.querySelectorAll('[data-auth-link]').forEach(authLink => {
-    if (user) {
-      authLink.textContent = 'My account';
-      authLink.href = 'profile.html';
-    } else {
-      authLink.textContent = 'Sign in';
-      authLink.href = 'login.html';
-    }
+    authLink.textContent = user ? 'My account' : 'Sign in';
+    authLink.href = user ? 'profile.html' : 'login.html';
   });
 
   const badge = link && link.querySelector('[data-notification-count]');
-  if (badge) {
-    const userId = user && user.id ? user.id : 1;
-    fetch(`${NOTIFICATION_API_BASE}/api/notifications/unread-count`, {
-      headers: { 'X-User-Id': String(userId) }
+  if (!badge) return;
+  fetch(`${NOTIFICATION_API_BASE}/api/notifications/unread-count`, {
+    headers: { 'X-User-Id': String(user && user.id ? user.id : 1) }
+  })
+    .then(response => response.ok ? response.json() : Promise.reject())
+    .then(result => {
+      if (result.unread > 0) {
+        badge.textContent = result.unread > 99 ? '99+' : result.unread;
+        badge.hidden = false;
+      }
     })
-      .then(response => response.ok ? response.json() : Promise.reject())
-      .then(result => {
-        if (result.unread > 0) {
-          badge.textContent = result.unread > 99 ? '99+' : result.unread;
-          badge.hidden = false;
-        }
-      })
-      .catch(error => console.warn('Could not load notification count', error));
-  }
+    .catch(error => console.warn('Could not load notification count', error));
 }
 
 document.addEventListener('DOMContentLoaded', () => {

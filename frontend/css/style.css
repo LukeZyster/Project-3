@@ -1,108 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Account — StudentMarket</title>
-	<link rel="stylesheet" href="css/style.css">
-</head>
-<body class="site-page">
-	<header class="site-header">
-		<a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a>
-		<nav class="site-links" aria-label="Primary navigation">
-			<a href="merch.html">Store</a>
-			<a href="marketplace.html">Marketplace</a>
-			<a href="chat.html">Messages</a>
-			<a href="profile.html">Account</a>
-		</nav>
-	</header>
-
-	<main class="profile-page">
-		<section class="profile-hero">
-			<p class="eyebrow">Your account</p>
-			<h1 id="profileGreeting">Welcome to StudentMarket.</h1>
-			<p class="hero-text" id="profileDetail">Sign in to keep your profile and activity together.</p>
-			<div class="hero-actions">
-				<a class="button button-primary" href="merch.html">Continue shopping</a>
-				<button class="button button-secondary" id="signOutButton" type="button">Sign out</button>
-			</div>
-		</section>
-
-		<section class="profile-layout">
-			<aside class="profile-sidebar">
-				<div class="profile-avatar" id="profileAvatar">S</div>
-				<h2 id="profileName">Student</h2>
-				<p id="profileMeta">Campus member</p>
-				<div class="profile-actions">
-					<button class="button button-primary" type="button">Edit profile</button>
-					<button class="button button-secondary" type="button">Saved items</button>
-				</div>
-			</aside>
-
-			<div class="profile-main">
-				<div class="profile-card">
-					<h3>Personal info</h3>
-					<div class="profile-grid">
-						<div><span>Full name</span><strong id="infoName">StudentName</strong></div>
-						<div><span>Student email</span><strong id="infoEmail">student@example.com</strong></div>
-						<div><span>Course</span><strong>Information Technology</strong></div>
-						<div><span>Year</span><strong>2nd year</strong></div>
-						<div><span>Student ID</span><strong>202456789</strong></div>
-						<div><span>Campus</span><strong>CPUT</strong></div>
-					</div>
-				</div>
-
-				<div class="profile-card">
-					<h3>Order history</h3>
-					<ul class="profile-list">
-						<li><span>Campus Hoodie</span><strong>R499.99</strong></li>
-						<li><span>Mini Fridge</span><strong>R1,200.00</strong></li>
-						<li><span>Study Planner</span><strong>R79.99</strong></li>
-					</ul>
-				</div>
-
-				<div class="profile-card">
-					<h3>Banking details</h3>
-					<div class="profile-grid">
-						<div><span>Bank</span><strong>ABSA</strong></div>
-						<div><span>Account holder</span><strong id="bankHolder">Student account</strong></div>
-						<div><span>Account type</span><strong>Student account</strong></div>
-						<div><span>Last updated</span><strong>12 Oct 2026</strong></div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
-
-	<footer class="site-footer"><span>StudentMarket</span><a href="index.html">Back to home</a></footer>
-	<script src="js/auth.js"></script>
-	<script>
-		const profileUser = getCurrentUser();
-		const guestState = !profileUser;
-
-		if (guestState) {
-			document.getElementById('profileGreeting').textContent = 'You are not signed in yet.';
-			document.getElementById('profileDetail').textContent = 'Create an account or sign in to see your profile details, orders, and wallet information.';
-			document.querySelector('.profile-layout').style.display = 'none';
-			const cta = document.createElement('div');
-			cta.className = 'auth-cta';
-			cta.innerHTML = '<a class="button button-primary" href="login.html">Sign in</a><a class="button button-secondary" href="register.html">Create account</a>';
-			document.querySelector('.profile-hero').appendChild(cta);
-		} else {
-			document.getElementById('profileGreeting').textContent = `Good to see you, ${profileUser.name}.`;
-			document.getElementById('profileDetail').textContent = profileUser.email;
-			document.getElementById('profileName').textContent = profileUser.name;
-			document.getElementById('profileMeta').textContent = profileUser.role === 'ADMIN' ? 'Administrator' : 'Student member';
-			document.getElementById('profileAvatar').textContent = (profileUser.name || 'S').charAt(0).toUpperCase();
-			document.getElementById('infoName').textContent = profileUser.name;
-			document.getElementById('infoEmail').textContent = profileUser.email;
-			document.getElementById('bankHolder').textContent = profileUser.name;
-		}
-
-		document.getElementById('signOutButton').addEventListener('click', () => {
-			localStorage.removeItem(AUTH_KEY);
-			window.location.href = 'index.html';
-		});
-	</script>
-</body>
-</html>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+:root { --ink:#0d1d2a; --muted:#5d6f7d; --line:#dfe8ee; --paper:#edf4f8; --white:#fff; --seal-blue:#0f4c5c; --seal-blue-dark:#0a2339; --navy:#0d1d2a; --accent:#d93c6a; --accent-soft:#f7d8e1; --card-shadow:0 18px 50px rgba(13,29,42,.08); }
+* { box-sizing:border-box; }
+body { margin:0; color:var(--ink); font-family:'DM Sans',sans-serif; background:var(--paper); }
+a { color:inherit; }
+.site-page,.auth-page { min-height:100vh; background:radial-gradient(circle at 85% 12%,rgba(217,60,106,.12) 0,transparent 30%),var(--paper); }
+.site-header { max-width:1180px; margin:auto; padding:24px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.brand { display:inline-flex; align-items:center; gap:10px; text-decoration:none; font-weight:700; font-size:17px; }
+.brand-mark { display:grid; place-items:center; width:32px; height:32px; border-radius:9px; color:var(--white); background:var(--seal-blue); font-family:'Space Grotesk',sans-serif; }
+.site-links { display:flex; align-items:center; flex-wrap:wrap; gap:22px; color:var(--muted); font-size:14px; }
+.site-links a,.quiet-link { text-decoration:none; }
+.site-links a:hover,.quiet-link:hover,.text-link:hover { color:var(--seal-blue); }
+h1,h2,h3 { font-family:'Space Grotesk',sans-serif; }
+.eyebrow { margin:0 0 12px; color:var(--seal-blue); text-transform:uppercase; letter-spacing:.14em; font-size:11px; font-weight:700; }
+.hero-text { max-width:650px; margin:18px 0 24px; color:var(--muted); font-size:17px; line-height:1.6; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:12px; }
+.button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:0 18px; border:0; border-radius:8px; text-decoration:none; font:600 14px 'DM Sans',sans-serif; cursor:pointer; }
+.button-primary { background:var(--seal-blue); color:var(--white); }
+.button-primary:hover { background:var(--seal-blue-dark); }
+.button-secondary { border:1px solid var(--line); background:var(--white); color:var(--ink); }
+.site-footer { max-width:1180px; margin:auto; padding:24px 32px 34px; display:flex; justify-content:space-between; gap:18px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); }
+.home-hero { max-width:1180px; margin:54px auto 110px; padding:0 32px; display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:80px; align-items:center; }
+.hero-copy h1 { max-width:700px; margin:0; font-size:clamp(42px,6vw,78px); line-height:.98; letter-spacing:-.03em; }
+.hero-panel { min-height:360px; padding:34px; display:flex; flex-direction:column; justify-content:space-between; border-radius:22px; background:linear-gradient(135deg,var(--seal-blue-dark),var(--seal-blue)); color:var(--white); }
+.hero-panel-label { color:var(--accent-soft); font-size:12px; text-transform:uppercase; letter-spacing:.12em; }
+.hero-panel strong { font:600 42px/1 'Space Grotesk',sans-serif; }
+.home-section { max-width:1180px; margin:auto; padding:0 32px 100px; }
+.section-heading h2 { font-size:36px; }
+.flow-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.flow-card { min-height:220px; padding:24px; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.7); text-decoration:none; }
+.flow-card h3 { margin:30px 0 8px; }
+.flow-card p,.muted-copy { color:var(--muted); line-height:1.55; }
+.flow-number,.text-link { color:var(--seal-blue); font-weight:700; }
+.auth-layout { max-width:980px; min-height:calc(100vh - 90px); margin:auto; padding:64px 32px; display:grid; grid-template-columns:1fr 390px; gap:70px; align-items:center; }
+.auth-card { display:grid; gap:18px; padding:30px; border:1px solid var(--line); border-radius:14px; background:var(--white); box-shadow:var(--card-shadow); }
+.auth-card h2 { margin:0; font-size:30px; }
+.auth-card label,.sell-form label,.profile-edit-form label { display:grid; gap:7px; color:var(--muted); font-size:13px; font-weight:600; }
+.auth-card input,.sell-form input,.sell-form select,.sell-form textarea,.profile-edit-form input { width:100%; min-height:44px; padding:11px 13px; border:1px solid var(--line); border-radius:7px; color:var(--ink); background:var(--white); font:15px 'DM Sans',sans-serif; }
+.sell-form textarea { resize:vertical; }
+.form-message { min-height:18px; margin:0; color:var(--seal-blue); font-size:13px; }
+.form-foot { text-align:center; font-size:13px; }
+.marketplace-shell,.profile-page,.sell-page { max-width:1180px; margin:30px auto 80px; padding:0 32px; }
+.marketplace-hero { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:end; gap:18px; margin-bottom:22px; padding:28px 30px; border:1px solid var(--line); border-radius:22px; background:linear-gradient(135deg,rgba(15,76,92,.12),rgba(15,76,92,.02)); }
+.marketplace-hero h1,.sell-intro h1 { max-width:720px; margin:0; font-size:clamp(38px,5vw,62px); line-height:1; }
+.marketplace-controls,.market-section,.profile-card,.profile-sidebar { border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.72); box-shadow:0 12px 32px rgba(11,37,61,.04); }
+.marketplace-controls { display:grid; gap:12px; padding:18px 22px; margin-bottom:22px; }
+.market-search-label { font-weight:700; font-size:13px; }
+.market-search { width:100%; min-height:46px; padding:12px 14px; border:1px solid var(--line); border-radius:9px; font:15px 'DM Sans',sans-serif; }
+.marketplace-pills { display:flex; flex-wrap:wrap; gap:9px; }
+.market-pill { border:1px solid var(--line); background:var(--white); color:var(--ink); border-radius:999px; padding:9px 14px; font:600 12px 'DM Sans',sans-serif; cursor:pointer; }
+.market-pill.active { background:var(--seal-blue); color:var(--white); border-color:var(--seal-blue); }
+.market-section { padding:22px; margin-bottom:20px; }
+.section-header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
+.section-header h2,.profile-card h2 { margin:0; font-size:26px; }
+.section-header a { color:var(--seal-blue); font-weight:700; text-decoration:none; }
+.listing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px; }
+.listing-card { position:relative; overflow:hidden; border:1px solid var(--line); border-radius:15px; background:var(--white); }
+.market-image-wrap { position:relative; }
+.listing-card__image,.listing-card__photo { display:flex; width:100%; height:160px; align-items:center; justify-content:center; object-fit:cover; background:linear-gradient(135deg,#dceef6,#bed7e6); color:#38576d; font-weight:700; }
+.textbooks-image { background:linear-gradient(135deg,#fce0b0,#d69f4d); }
+.appliances-image { background:linear-gradient(135deg,#d9e8f2,#7fa8c7); }
+.furniture-image { background:linear-gradient(135deg,#dfe9d7,#9db186); }
+.tech-image { background:linear-gradient(135deg,#dce3ff,#8497d9); }
+.other-image { background:linear-gradient(135deg,#f5dbdb,#bb7a7a); }
+.merch-image { background:linear-gradient(135deg,#1b4059,#b9d9eb); }
+.listing-card__body { display:grid; gap:7px; padding:14px 15px 16px; }
+.listing-card__body h3 { margin:0; font-size:18px; }
+.listing-card__body p { margin:0; color:var(--muted); line-height:1.45; font-size:13px; }
+.listing-category,.listing-meta { font-size:11px!important; }
+.listing-price { color:var(--seal-blue)!important; font-size:17px!important; font-weight:700; }
+.save-item-button { position:absolute; top:10px; right:10px; width:38px; height:38px; border:0; border-radius:50%; background:rgba(255,255,255,.95); color:#9d3654; font-size:23px; cursor:pointer; box-shadow:0 3px 12px rgba(0,0,0,.12); }
+.save-item-button.is-saved { color:#d93c6a; }
+.empty-state { padding:20px; color:var(--muted); text-align:center; }
+.listing-count { color:var(--muted); font-size:13px; }
+.merch-callout { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; }
+.profile-hero { margin-bottom:26px; }
+.profile-layout { display:grid; grid-template-columns:260px minmax(0,1fr); align-items:start; gap:22px; }
+.profile-sidebar { position:sticky; top:18px; display:grid; justify-items:center; gap:12px; padding:24px; text-align:center; }
+.profile-avatar { width:82px; height:82px; display:grid; place-items:center; border-radius:50%; background:linear-gradient(135deg,var(--seal-blue),#6cb7d9); color:var(--white); font-size:32px; font-weight:700; }
+.profile-sidebar h2 { margin:0; }
+.profile-main { display:grid; gap:18px; }
+.profile-card { padding:22px; }
+.profile-edit-form { display:grid; gap:14px; margin-top:18px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.profile-list { list-style:none; padding:0; display:grid; gap:10px; }
+.profile-list li { display:flex; justify-content:space-between; padding:12px; border:1px solid var(--line); border-radius:10px; }
+.sell-page { max-width:850px; }
+.sell-intro { margin-bottom:24px; }
+.sell-form { max-width:800px; }
+.security-note { padding:12px; border-radius:8px; background:#fff8e9; }
+.auth-cta { display:flex; flex-wrap:wrap; gap:12px; margin-top:16px; }
+[hidden] { display:none!important; }
+@media(max-width:760px) {
+ .site-header { padding:18px 20px; align-items:flex-start; flex-direction:column; }
+ .site-links { gap:12px; font-size:12px; }
+ .home-hero,.auth-layout { grid-template-columns:1fr; gap:36px; margin-top:30px; padding:0 20px; }
+ .home-section,.marketplace-shell,.profile-page,.sell-page { padding-left:20px; padding-right:20px; }
+ .flow-grid { grid-template-columns:1fr; }
+ .profile-layout { grid-template-columns:1fr; }
+ .profile-sidebar { position:static; }
+ .form-row { grid-template-columns:1fr; }
+ .marketplace-hero { padding:22px 18px; }
+ .site-footer { padding-left:20px; padding-right:20px; }
+}
