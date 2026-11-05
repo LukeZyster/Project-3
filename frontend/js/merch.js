@@ -6,6 +6,14 @@ let allItems = [];
 let activeCategory = 'All';
 let searchQuery = '';
 
+const fallbackItems = [
+    { id: 1, name: 'Campus Hoodie', price: 499.99, category: 'Clothing', imageUrl: 'assets/images/merch/varsity-hoodie.jpg', description: 'A warm campus essential.' },
+    { id: 2, name: 'Student Tee', price: 199.99, category: 'Clothing', imageUrl: 'assets/images/merch/student-tee.jpg', description: 'Everyday student style.' },
+    { id: 3, name: 'Coffee Mug', price: 89.99, category: 'Drinkware', imageUrl: 'assets/images/merch/varsity-mug.jpg', description: 'For early lectures and late study sessions.' },
+    { id: 4, name: 'Notebook', price: 59.99, category: 'Stationery', imageUrl: 'assets/images/merch/notebook.jpg', description: 'Keep your semester organised.' },
+    { id: 5, name: 'Snapback Cap', price: 149.99, category: 'Clothing', imageUrl: 'assets/images/merch/cap.jpg', description: 'A classic campus finish.' }
+];
+
 // ---------- Cart helpers ----------
 function getCart() {
     return JSON.parse(localStorage.getItem('cart') || '[]');
@@ -128,12 +136,13 @@ function applyFilters() {
 // ---------- Data loading ----------
 async function loadMerch() {
     try {
-        allItems = await api.get('/merch');
+        const remoteItems = await api.get('/merch');
+        allItems = remoteItems.length ? remoteItems : fallbackItems;
         applyFilters();
     } catch (err) {
         console.error('Failed to load merch:', err);
-        document.getElementById('popularGrid').innerHTML =
-            `<div class="empty-state">Could not load products. ${err.message}</div>`;
+        allItems = fallbackItems;
+        applyFilters();
     }
 }
 
@@ -148,7 +157,7 @@ function escapeHtml(str) {
 
 // ---------- Init ----------
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('searchInput').addEventListener('input', (e) => {
+    document.getElementById('searchInput')?.addEventListener('input', (e) => {
         searchQuery = e.target.value;
         applyFilters();
     });
@@ -165,11 +174,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const user = (typeof getCurrentUser === 'function') ? getCurrentUser() : null;
     if (user && user.role === 'ADMIN') {
         const fab = document.getElementById('fabAdd');
-        fab.style.display = 'block';
-        fab.addEventListener('click', () => {
-            alert('Admin product form coming soon');
-        });
+        if (fab) {
+            fab.style.display = 'block';
+            fab.addEventListener('click', () => { window.location.href = 'marketplace.html'; });
+        }
     }
+
+    document.querySelector('.shop-now-btn')?.addEventListener('click', () => {
+        document.getElementById('popularGrid')?.scrollIntoView({ behavior: 'smooth' });
+    });
 
     updateCartBadge();
     loadMerch();

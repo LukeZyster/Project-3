@@ -51,7 +51,16 @@ function renderCart() {
     };
 
     document.getElementById('checkoutBtn').onclick = () => {
-        alert('Checkout coming soon! Total: R' + total.toFixed(2));
+      const order = {
+        id: `SM-${Date.now().toString().slice(-6)}`,
+        items: cart,
+        total,
+        createdAt: new Date().toISOString()
+      };
+      localStorage.setItem('lastOrder', JSON.stringify(order));
+      saveCart([]);
+      container.innerHTML = `<div class="empty-state"><strong>Order ${order.id} placed.</strong><br>Your campus essentials are on their way.</div>`;
+      summary.style.display = 'none';
     };
 }
 

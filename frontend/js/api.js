@@ -1,12 +1,12 @@
 const api = (() => {
-	const baseUrl = (window.API_BASE_URL || 'http://localhost:8080/api').replace(/\/$/, '');
+	const host = window.location.hostname || 'localhost';
+	const baseUrl = (window.API_BASE_URL || `${window.location.protocol}//${host}:8080/api`).replace(/\/$/, '');
 
 	async function request(path, options = {}) {
+		const headers = { ...(options.headers || {}) };
+		if (options.body) headers['Content-Type'] = 'application/json';
 		const response = await fetch(`${baseUrl}${path.startsWith('/') ? path : `/${path}`}`, {
-			headers: {
-				'Content-Type': 'application/json',
-				...(options.headers || {})
-			},
+			headers,
 			...options
 		});
 
