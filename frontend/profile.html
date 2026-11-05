@@ -1,10 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Account — StudentMarket</title><link rel="stylesheet" href="css/style.css"></head>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Marketplace — StudentMarket</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
 <body class="site-page">
-<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><nav class="site-links"><a href="merch.html">Store</a><a href="marketplace.html">Marketplace</a><a href="chat.html">Messages</a></nav></header>
-<main class="home-section route-page"><p class="eyebrow">Your account</p><h1 id="profileGreeting">Welcome to StudentMarket.</h1><p class="hero-text" id="profileDetail">Sign in to keep your profile and activity together.</p><div class="hero-actions"><a class="button button-primary" href="merch.html">Continue shopping</a><button class="button button-secondary" id="signOutButton" type="button">Sign out</button></div></main>
-<footer class="site-footer"><span>StudentMarket</span><a href="index.html">Back to home</a></footer>
-<script src="js/auth.js"></script>
-<script>const profileUser = getCurrentUser(); if (profileUser) { document.getElementById('profileGreeting').textContent = `Good to see you, ${profileUser.name}.`; document.getElementById('profileDetail').textContent = profileUser.email; } document.getElementById('signOutButton').addEventListener('click', () => { localStorage.removeItem(AUTH_KEY); window.location.href = 'index.html'; });</script>
-</body></html>
+	<header class="site-header">
+		<a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a>
+		<nav class="site-links" aria-label="Primary navigation">
+			<a href="merch.html">Store</a>
+			<a href="marketplace.html">Marketplace</a>
+			<a href="chat.html">Messages</a>
+			<a href="profile.html">Account</a>
+			<a href="notification.html" data-notifications-link>Notifications</a>
+		</nav>
+	</header>
+
+	<main class="marketplace-shell">
+		<section class="marketplace-hero">
+			<div>
+				<p class="eyebrow">Campus marketplace</p>
+				<h1>Buy and sell what students actually need.</h1>
+				<p class="hero-text">Your merch store is still here, but now it sits inside a larger campus marketplace with textbooks, appliances, furniture, tech, and everyday student essentials.</p>
+			</div>
+			<div class="hero-actions">
+				<a class="button button-primary" href="merch.html">Browse merch</a>
+				<a class="button button-secondary" href="chat.html">Messages</a>
+			</div>
+		</section>
+
+		<section class="marketplace-grid">
+			<aside class="marketplace-sidebar">
+				<h2>Browse by category</h2>
+				<div class="marketplace-pills">
+					<button class="market-pill active" type="button" data-category="All">All items</button>
+					<button class="market-pill" type="button" data-category="Textbooks">Textbooks</button>
+					<button class="market-pill" type="button" data-category="Appliances">Appliances</button>
+					<button class="market-pill" type="button" data-category="Furniture">Furniture</button>
+					<button class="market-pill" type="button" data-category="Tech">Tech</button>
+					<button class="market-pill" type="button" data-category="Merch">Merch</button>
+				</div>
+			</aside>
+
+			<div class="marketplace-content">
+				<section class="market-section">
+					<div class="section-header">
+						<h2>Campus merch</h2>
+						<a href="merch.html">Open the store</a>
+					</div>
+					<div class="mini-card-grid">
+						<article class="mini-card" data-category="Merch">
+							<div class="mini-card__image merch-hoodie"></div>
+							<div class="mini-card__body">
+								<h3>Varsity Hoodie</h3>
+								<p>R499.99</p>
+							</div>
+						</article>
+						<article class="mini-card" data-category="Merch">
+							<div class="mini-card__image merch-cap"></div>
+							<div class="mini-card__body">
+								<h3>Campus Cap</h3>
+								<p>R149.99</p>
+							</div>
+						</article>
+						<article class="mini-card" data-category="Merch">
+							<div class="mini-card__image merch-mug"></div>
+							<div class="mini-card__body">
+								<h3>Travel Mug</h3>
+								<p>R89.99</p>
+							</div>
+						</article>
+					</div>
+				</section>
+
+				<section class="market-section">
+					<div class="section-header">
+						<h2>Marketplace picks</h2>
+						<a href="chat.html">Ask about a listing</a>
+					</div>
+					<div class="listing-grid">
+						<article class="listing-card" data-category="Textbooks">
+							<div class="listing-card__image textbook-image"></div>
+							<div class="listing-card__body">
+								<h3>Intro to Economics</h3>
+								<p>Used textbook · R180</p>
+							</div>
+						</article>
+						<article class="listing-card" data-category="Appliances">
+							<div class="listing-card__image appliance-image"></div>
+							<div class="listing-card__body">
+								<h3>Mini Fridge</h3>
+								<p>Good condition · R1,200</p>
+							</div>
+						</article>
+						<article class="listing-card" data-category="Furniture">
+							<div class="listing-card__image furniture-image"></div>
+							<div class="listing-card__body">
+								<h3>Study Desk</h3>
+								<p>Compact desk · R750</p>
+							</div>
+						</article>
+						<article class="listing-card" data-category="Tech">
+							<div class="listing-card__image tech-image"></div>
+							<div class="listing-card__body">
+								<h3>Wireless Mouse</h3>
+								<p>Almost new · R220</p>
+							</div>
+						</article>
+						<article class="listing-card" data-category="Textbooks">
+							<div class="listing-card__image notes-image"></div>
+							<div class="listing-card__body">
+								<h3>Physics Notes Bundle</h3>
+								<p>Year notes · R100</p>
+							</div>
+						</article>
+						<article class="listing-card" data-category="Appliances">
+							<div class="listing-card__image kettle-image"></div>
+							<div class="listing-card__body">
+								<h3>Hot Water Kettle</h3>
+								<p>Student kitchen essential · R260</p>
+							</div>
+						</article>
+					</div>
+				</section>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer"><span>StudentMarket</span><a href="index.html">Back to home</a></footer>
+	<script src="js/auth.js"></script>
+	<script>
+		const pills = document.querySelectorAll('.market-pill');
+		const cards = document.querySelectorAll('.listing-card, .mini-card');
+		pills.forEach(button => {
+			button.addEventListener('click', () => {
+				pills.forEach(item => item.classList.toggle('active', item === button));
+				const category = button.dataset.category;
+				cards.forEach(card => {
+					const match = category === 'All' || card.dataset.category === category;
+					card.style.display = match ? '' : 'none';
+				});
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,84 +1,52 @@
-const AUTH_KEY = 'studentMarketUser';
-const NOTIFICATION_API_BASE = ['localhost', '127.0.0.1'].includes(window.location.hostname)
-	? 'http://localhost:8080'
-	: 'https://project-3-iykb.onrender.com';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>StudentMarket — Campus commerce</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/modern.css">
+</head>
+<body class="site-page">
+<header class="site-header">
+	<a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a>
+	<nav class="site-links" aria-label="Primary navigation">
+		<a href="merch.html">Store</a>
+		<a href="marketplace.html">Marketplace</a>
+		<a href="notification.html">Notifications</a>
+		<a href="login.html" data-auth-link>Sign in</a>
+	</nav>
+</header>
 
-function getCurrentUser() {
-	return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
-}
+<main>
+	<section class="home-hero">
+		<div class="hero-copy">
+			<p class="eyebrow">Buy, sell, belong</p>
+			<h1>Campus finds, without the detour.</h1>
+			<p class="hero-text">A trusted place for students to discover essentials, find second-hand gems, and meet the people behind the listings.</p>
+			<div class="hero-actions">
+				<a class="button button-primary" href="merch.html">Explore the store</a>
+				<a class="button button-secondary" href="marketplace.html">Browse marketplace</a>
+			</div>
+		</div>
+		<div class="hero-panel">
+			<span class="hero-panel-label">This week on campus</span>
+			<strong>Fresh gear.<br>Fair prices.</strong>
+			<span>Everything you need for the semester, in one place.</span>
+		</div>
+	</section>
 
-function setCurrentUser(user) {
-	localStorage.setItem(AUTH_KEY, JSON.stringify(user));
-}
+	<section class="home-section">
+		<div class="section-heading"><p class="eyebrow">Start here</p><h2>One account, every campus flow.</h2></div>
+		<div class="flow-grid">
+			<a class="flow-card" href="merch.html"><span class="flow-number">01</span><h3>Shop essentials</h3><p>Browse official merch and add your favourites to one simple cart.</p><span class="text-link">Visit the store →</span></a>
+			<a class="flow-card" href="marketplace.html"><span class="flow-number">02</span><h3>Find a deal</h3><p>Explore student listings and connect directly with your campus community.</p><span class="text-link">Explore listings →</span></a>
+			<a class="flow-card" href="notification.html"><span class="flow-number">03</span><h3>Stay in the loop</h3><p>See every new listing and sold item as soon as it happens.</p><span class="text-link">View notifications →</span></a>
+		</div>
+	</section>
+</main>
 
-function redirectAfterAuth() {
-	window.location.href = 'merch.html';
-}
-
-function addNotificationsLink() {
-	// Keep exactly one notification link across the desktop and app navigation areas.
-	const existingLinks = [...document.querySelectorAll(
-		'a[href="notification.html"], a[data-notifications-link]'
-	)];
-	const siteNav = document.querySelector('.site-links');
-	const appHeader = document.querySelector('.app-header');
-	let link = existingLinks.find(item => siteNav && siteNav.contains(item)) || existingLinks[0];
-
-	existingLinks.forEach(item => {
-		if (item !== link) item.remove();
-	});
-
-	if (!link) {
-		const parent = siteNav || appHeader;
-		if (parent) {
-			link = document.createElement('a');
-			link.href = 'notification.html';
-			link.dataset.notificationsLink = '';
-			if (siteNav) {
-				link.textContent = 'Notifications';
-			} else {
-				link.className = 'icon-btn notification-link';
-				link.setAttribute('aria-label', 'Notifications');
-				link.textContent = '🔔';
-			}
-			parent.append(link);
-		}
-	}
-
-	if (link) {
-		link.dataset.notificationsLink = '';
-		if (!link.querySelector('[data-notification-count]')) {
-			const badge = document.createElement('span');
-			badge.className = 'notification-count';
-			badge.dataset.notificationCount = '';
-			badge.hidden = true;
-			link.append(badge);
-		}
-	}
-
-	const user = getCurrentUser();
-	document.querySelectorAll('[data-auth-link]').forEach(authLink => {
-		if (user) {
-			authLink.textContent = 'My account';
-			authLink.href = 'profile.html';
-		}
-	});
-
-	const badge = link && link.querySelector('[data-notification-count]');
-	if (badge) {
-		const userId = user && user.id ? user.id : 1;
-		fetch(`${NOTIFICATION_API_BASE}/api/notifications/unread-count`, {
-			headers: { 'X-User-Id': String(userId) }
-		})
-			.then(response => response.ok ? response.json() : Promise.reject())
-			.then(result => {
-				if (result.unread > 0) {
-					badge.textContent = result.unread > 99 ? '99+' : result.unread;
-					badge.hidden = false;
-				}
-			})
-			.catch(error => console.warn('Could not load notification count', error));
-	}
-}
-
-document.addEventListener('DOMContentLoaded', addNotificationsLink);
+<footer class="site-footer"><span>StudentMarket</span><span>Built for campus life.</span></footer>
+<script src="js/auth.js"></script>
+</body>
+</html>

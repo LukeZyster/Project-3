@@ -1,9 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Marketplace — StudentMarket</title><link rel="stylesheet" href="css/style.css"></head>
-<body class="site-page">
-<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><nav class="site-links"><a href="merch.html">Store</a><a href="chat.html">Messages</a><a href="profile.html">Account</a></nav></header>
-<main class="home-section route-page"><p class="eyebrow">Student marketplace</p><h1>Find useful things nearby.</h1><p class="hero-text">The student-to-student marketplace is ready for listings and conversations. Start with official campus essentials while the community board fills up.</p><div class="hero-actions"><a class="button button-primary" href="merch.html">Shop the store</a><a class="button button-secondary" href="login.html">Sign in to sell</a></div></main>
-<footer class="site-footer"><span>StudentMarket</span><a href="index.html">Back to home</a></footer>
-<script src="js/auth.js"></script>
-</body></html>
+document.getElementById('registerForm')?.addEventListener('submit', event => {
+	event.preventDefault();
+	const name = document.getElementById('registerName').value.trim();
+	const email = document.getElementById('registerEmail').value.trim();
+	const message = document.getElementById('registerMessage');
+
+	setCurrentUser({
+		id: 2,
+		name: name || (email ? email.split('@')[0] : 'Student'),
+		email,
+		role: 'USER'
+	});
+
+	message.textContent = 'Account created. Taking you to your profile...';
+	setTimeout(() => {
+		window.location.href = 'profile.html';
+	}, 250);
+});
