@@ -2,7 +2,7 @@
 FROM eclipse-temurin:25-jdk AS build
 WORKDIR /workspace
 COPY . .
-RUN chmod +x mvnw && ./mvnw -B -DskipTests package
+RUN chmod +x mvnw && ./mvnw -B -Dmaven.test.skip=true package
 
 # Run the app on Java 25. Render supplies PORT; locally the app uses 8080.
 FROM eclipse-temurin:25-jre
