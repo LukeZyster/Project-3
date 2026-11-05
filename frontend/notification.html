@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <link rel="stylesheet" href="css/notification.css">
+</head>
+<body>
+<div class="page">
+    <header class="top-header">
+        <button type="button"
+                id="backButton"
+                class="back-button"
+                aria-label="Go back">←</button>
+        <h1>Notifications</h1>
+        <button id="clearAllButton"
+                class="text-button"
+                type="button">
+            CLEAR ALL
+        </button>
+    </header>
+    
+    <main class="main-content">
+        <p id="statusMessage" class="status-message" role="alert" hidden></p>
+        <section id="newSection" class="notification-section" hidden>
+            <div class="section-header">
+                <h2>NEW</h2>
+                <span id="unreadBadge" class="unread-badge">0 UNREAD</span>
+            </div>
+            <div id="newList" class="notification-list"></div>
+        </section>
+
+        <section id="earlierSection" class="notification-section" hidden>
+            <div class="section-header">
+                <h2>EARLIER</h2>
+            </div>
+            <div id="earlierList" class="notification-list"></div>
+        </section>
+
+        <div id="emptyState" class="empty-state" hidden>
+            <div class="empty-icon">🔔</div>
+            <h3>You're all caught up</h3>
+            <p>New notifications will show up here.</p>
+        </div>
+    </main>
+    
+    <nav class="bottom-nav">
+        <a href="marketplace.html">
+            <span class="nav-icon">🛍</span>
+            <span>Store</span>
+        </a>
+        <a href="chat.html">
+            <span class="nav-icon">💬</span>
+            <span>Chat</span>
+        </a>
+        <a href="#">
+            <span class="sell-icon">＋</span>
+            <span>Sell</span>
+        </a>
+        <a href="profile.html">
+            <span class="nav-icon">♙</span>
+            <span>Account</span>
+        </a>
+    </nav>
+</div>
+
+<template id="notificationTemplate">
+    <article class="notification-card">
+        <div class="card-icon"></div>
+        <div class="card-body">
+            <div class="card-top">
+                <h3 class="card-title"></h3>
+                <time class="card-time"></time>
+            </div>
+            <p class="card-message"></p>
+            <div class="card-bottom">
+                <span class="card-tag"></span>
+                <div class="card-actions">
+                    <button class="action-button delete-button" type="button">
+                        DELETE
+                    </button>
+                    <button class="action-button read-button" type="button">
+                        MARK AS READ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </article>
+</template>
+
+<script src="js/notification.js"></script>
+</body>
+</html>
