@@ -6,6 +6,21 @@ let allItems = [];
 let activeCategory = 'All';
 let searchQuery = '';
 
+// Keep the storefront useful in a fresh/demo deployment before the API has
+// any catalog records. The backend is seeded too; this is a final UI fallback.
+const DEMO_ITEMS = [
+    { id: 9001, name: 'Campus Hoodie', description: 'Official university hoodie with an embroidered crest.', price: 499.99, category: 'Clothing', stock: 12 },
+    { id: 9002, name: 'Student Tee', description: 'Soft cotton tee for everyday campus wear.', price: 199.99, category: 'Clothing', stock: 20 },
+    { id: 9003, name: 'Travel Mug', description: 'Insulated mug for lectures and commutes.', price: 89.99, category: 'Drinkware', stock: 18 },
+    { id: 9004, name: 'Notebook Set', description: 'A practical set of notebooks for the semester.', price: 59.99, category: 'Stationery', stock: 30 },
+    { id: 9005, name: 'Campus Cap', description: 'A lightweight cap for sunny days on campus.', price: 149.99, category: 'Clothing', stock: 14 },
+    { id: 9006, name: 'Laptop Sleeve', description: 'A padded sleeve to protect your laptop.', price: 329.99, category: 'Accessories', stock: 8 },
+    { id: 9007, name: 'Water Bottle', description: 'Reusable bottle for long days between classes.', price: 119.99, category: 'Drinkware', stock: 16 },
+    { id: 9008, name: 'Study Planner', description: 'Plan assignments, exams, and study sessions.', price: 79.99, category: 'Stationery', stock: 22 },
+    { id: 9009, name: 'Campus Socks', description: 'Comfortable everyday socks in campus colors.', price: 69.99, category: 'Clothing', stock: 25 },
+    { id: 9010, name: 'Exam Highlighter Pack', description: 'Bright colors for notes and revision.', price: 39.99, category: 'Stationery', stock: 35 }
+];
+
 // ---------- Cart helpers ----------
 function getCart() {
     return JSON.parse(localStorage.getItem('cart') || '[]');
@@ -92,7 +107,7 @@ function render(items) {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const id = Number(btn.dataset.id);
-            const item = allItems.find(x => x.id === id);
+            const item = allItems.find(x => Number(x.id) === id);
             if (item) {
                 addToCart(item);
                 btn.classList.add('added');
@@ -128,13 +143,13 @@ function applyFilters() {
 // ---------- Data loading ----------
 async function loadMerch() {
     try {
-        allItems = await api.get('/merch');
-        applyFilters();
+        const response = await api.get('/merch');
+        allItems = Array.isArray(response) && response.length > 0 ? response : DEMO_ITEMS;
     } catch (err) {
-        console.error('Failed to load merch:', err);
-        document.getElementById('popularGrid').innerHTML =
-            `<div class="empty-state">Could not load products. ${err.message}</div>`;
+        console.error('Failed to load merch; showing demo catalog:', err);
+        allItems = DEMO_ITEMS;
     }
+    applyFilters();
 }
 
 // ---------- Utilities ----------
@@ -165,10 +180,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const user = (typeof getCurrentUser === 'function') ? getCurrentUser() : null;
     if (user && user.role === 'ADMIN') {
         const fab = document.getElementById('fabAdd');
-        fab.style.display = 'block';
-        fab.addEventListener('click', () => {
-            alert('Admin product form coming soon');
-        });
+        if (fab) {
+            fab.style.display = 'block';
+            fab.addEventListener('click', () => {
+                alert('Admin product form coming soon');
+            });
+        }
     }
 
     updateCartBadge();
