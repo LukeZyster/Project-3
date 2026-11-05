@@ -16,35 +16,49 @@ function redirectAfterAuth() {
 }
 
 function addNotificationsLink() {
-	const siteNav = document.querySelector('.site-links');
-	if (siteNav && !siteNav.querySelector('[data-notifications-link]')) {
-		const link = document.createElement('a');
-		link.href = 'notification.html';
-		link.dataset.notificationsLink = '';
-		link.textContent = 'Notifications';
-		siteNav.append(link);
+	// Reuse a link already in the page instead of adding a second shortcut.
+	const existingLinks = [...document.querySelectorAll('a[href="notification.html"], [data-notifications-link]')];
+	let link = existingLinks.shift();
+	existingLinks.forEach(duplicate => duplicate.remove());
+
+	if (!link) {
+		const siteNav = document.querySelector('.site-links');
+		const appHeader = document.querySelector('.app-header');
+		const parent = siteNav || appHeader;
+		if (parent) {
+			link = document.createElement('a');
+			link.href = 'notification.html';
+			if (siteNav) {
+				link.textContent = 'Notifications';
+			} else {
+				link.className = 'icon-btn notification-link';
+				link.setAttribute('aria-label', 'Notifications');
+				link.textContent = '🔔';
+			}
+			parent.append(link);
+		}
 	}
 
-	const appHeader = document.querySelector('.app-header');
-	if (appHeader && !appHeader.querySelector('[data-notifications-link]')) {
-		const link = document.createElement('a');
-		link.href = 'notification.html';
-		link.className = 'icon-btn notification-link';
+	if (link) {
 		link.dataset.notificationsLink = '';
-		link.setAttribute('aria-label', 'Notifications');
-		link.innerHTML = '🔔<span class="notification-count" data-notification-count hidden></span>';
-		appHeader.append(link);
+		if (!link.querySelector('[data-notification-count]')) {
+			const badge = document.createElement('span');
+			badge.className = 'notification-count';
+			badge.dataset.notificationCount = '';
+			badge.hidden = true;
+			link.append(badge);
+		}
 	}
 
 	const user = getCurrentUser();
-	document.querySelectorAll('[data-auth-link]').forEach(link => {
+	document.querySelectorAll('[data-auth-link]').forEach(authLink => {
 		if (user) {
-			link.textContent = 'My account';
-			link.href = 'profile.html';
+			authLink.textContent = 'My account';
+			authLink.href = 'profile.html';
 		}
 	});
 
-	const badge = document.querySelector('[data-notification-count]');
+	const badge = link && link.querySelector('[data-notification-count]');
 	if (badge) {
 		const userId = user && user.id ? user.id : 1;
 		fetch(`${NOTIFICATION_API_BASE}/api/notifications/unread-count`, {
