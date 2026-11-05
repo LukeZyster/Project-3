@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Account — StudentMarket</title><link rel="stylesheet" href="css/style.css"></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account — StudentMarket</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
 <body class="site-page">
-<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><nav class="site-links"><a href="merch.html">Store</a><a href="marketplace.html">Marketplace</a><a href="chat.html">Messages</a></nav></header>
-<main class="home-section route-page"><p class="eyebrow">Your account</p><h1 id="profileGreeting">Welcome to StudentMarket.</h1><p class="hero-text" id="profileDetail">Sign in to keep your profile and activity together.</p><div class="hero-actions"><a class="button button-primary" href="merch.html">Continue shopping</a><button class="button button-secondary" id="signOutButton" type="button">Sign out</button></div></main>
-<footer class="site-footer"><span>StudentMarket</span><a href="index.html">Back to home</a></footer>
-<script src="js/auth.js"></script>
-<script>const profileUser = getCurrentUser(); if (profileUser) { document.getElementById('profileGreeting').textContent = `Good to see you, ${profileUser.name}.`; document.getElementById('profileDetail').textContent = profileUser.email; } document.getElementById('signOutButton').addEventListener('click', () => { localStorage.removeItem(AUTH_KEY); window.location.href = 'index.html'; });</script>
-</body></html>
+  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><nav class="site-links" aria-label="Primary navigation"><a href="merch.html">Store</a><a href="marketplace.html">Marketplace</a><a href="chat.html">Messages</a><a href="profile.html">Account</a><a href="notification.html" data-notifications-link>Notifications</a></nav></header>
+  <main class="profile-page">
+    <section class="profile-hero"><p class="eyebrow">Your account</p><h1 id="profileGreeting">Your StudentMarket profile</h1><p class="hero-text" id="profileDetail"></p><div class="hero-actions"><a class="button button-primary" href="marketplace.html">Browse marketplace</a><button class="button button-secondary" id="signOutButton" type="button">Sign out</button></div><div class="auth-cta" id="guestActions" hidden><a class="button button-primary" href="login.html">Sign in</a><a class="button button-secondary" href="register.html">Create account</a></div></section>
+    <section class="profile-layout" id="profileContent">
+      <aside class="profile-sidebar"><div class="profile-avatar" id="profileAvatar">S</div><h2 id="profileName">Student</h2><p id="profileMeta">Campus member</p><a class="button button-secondary" href="#savedItems">View saved items</a></aside>
+      <div class="profile-main">
+        <section class="profile-card"><h2>Personal and student details</h2><form id="profileForm" class="profile-edit-form"><div class="form-row"><label>Full name<input name="name" required maxlength="80"></label><label>Email<input name="email" type="email" required maxlength="160"></label></div><div class="form-row"><label>Course<input name="course" maxlength="100" placeholder="Course or programme"></label><label>Year of study<input name="year" maxlength="40" placeholder="e.g. 2nd year"></label></div><div class="form-row"><label>Student ID<input name="studentId" maxlength="40"></label><label>Campus<input name="campus" maxlength="100" placeholder="Campus"></label></div><p class="form-message" id="profileMessage" role="status"></p><button class="button button-primary" type="submit">Save profile</button></form></section>
+        <section class="profile-card"><h2>Order history</h2><p class="muted-copy">Orders will appear here after checkout is connected. No sample transactions are shown.</p><ul class="profile-list" id="orderHistory"></ul></section>
+        <section class="profile-card"><h2>Bank details</h2><form id="bankForm" class="profile-edit-form"><div class="form-row"><label>Bank name<input name="bankName" maxlength="80" placeholder="Bank"></label><label>Account holder<input name="bankHolder" maxlength="100" placeholder="Account holder"></label></div><label>Account type<input name="accountType" maxlength="50" placeholder="e.g. Cheque or savings"></label><p class="muted-copy security-note">For your safety, this demo does not ask for or store your full bank account number or card details.</p><p class="form-message" id="bankMessage" role="status"></p><button class="button button-primary" type="submit">Save bank details</button></form></section>
+        <section class="profile-card" id="savedItems"><div class="section-header"><h2>Saved items</h2><a href="marketplace.html">Find more items</a></div><div class="listing-grid" id="savedItemsGrid"></div><p class="empty-state" id="savedItemsEmpty">You have not saved any items yet. Tap the heart on a marketplace listing to keep it here.</p></section>
+        <section class="profile-card"><div class="section-header"><h2>Your listings</h2><a href="sell.html">＋ List an item</a></div><div class="listing-grid" id="myListingsGrid"></div><p class="empty-state" id="myListingsEmpty">You have not published any listings yet.</p></section>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><span>StudentMarket</span><a href="index.html">Back to home</a></footer>
+  <script src="js/auth.js"></script><script src="js/profile.js"></script>
+</body>
+</html>

@@ -1,9 +1,9 @@
 document.getElementById('registerForm')?.addEventListener('submit', event => {
-	event.preventDefault();
-	const name = document.getElementById('registerName').value.trim();
-	const email = document.getElementById('registerEmail').value.trim();
-	const message = document.getElementById('registerMessage');
-	setCurrentUser({ name, email });
-	message.textContent = 'Account created. Taking you to the store...';
-	redirectAfterAuth();
+  event.preventDefault();
+  const name = document.getElementById('registerName').value.trim();
+  const email = document.getElementById('registerEmail').value.trim();
+  const message = document.getElementById('registerMessage');
+  setCurrentUser({ id: Date.now(), name: name || (email ? email.split('@')[0] : 'Student'), email, role: 'USER' });
+  message.textContent = 'Account created. Taking you to your profile...';
+  setTimeout(() => { window.location.href = 'profile.html'; }, 250);
 });

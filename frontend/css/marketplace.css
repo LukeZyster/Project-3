@@ -1,0 +1,8 @@
+/* Marketplace/profile feature additions */
+.marketplace-shell h1 { line-height:1.02; }
+.listing-card__body .button { justify-self:start; margin-top:6px; }
+.store-save-button { position:absolute; top:8px; right:8px; width:36px; height:36px; border:0; border-radius:50%; background:#fff; color:#d93c6a; font-size:22px; cursor:pointer; box-shadow:0 3px 12px rgba(0,0,0,.12); }
+.product-card-image { position:relative; }
+.store-save-button.is-saved { color:#d93c6a; }
+.sell-intro h1 { margin:0; }
+.auth-card[hidden],.profile-layout[hidden] { display:none!important; }
