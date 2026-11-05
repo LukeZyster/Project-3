@@ -1,11 +1,12 @@
 const api = (() => {
 	const isLocalDevelopment = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-	const configuredBaseUrl = window.API_BASE_URL || (isLocalDevelopment ? 'http://localhost:8080/api' : '');
+	const productionBaseUrl = 'https://project-3-iykb.onrender.com/api';
+	const configuredBaseUrl = window.API_BASE_URL || (isLocalDevelopment ? 'http://localhost:8080/api' : productionBaseUrl);
 	const baseUrl = configuredBaseUrl.replace(/\/$/, '');
 
 	async function request(path, options = {}) {
 		if (!baseUrl) {
-			throw new Error('API is not configured. Set window.API_BASE_URL to your deployed backend URL (for example, https://your-service.onrender.com/api).');
+			throw new Error('API is not configured. Set window.API_BASE_URL to your deployed backend URL.');
 		}
 
 		const response = await fetch(`${baseUrl}${path.startsWith('/') ? path : `/${path}`}`, {
