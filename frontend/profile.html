@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Account — StudentMarket</title><link rel="stylesheet" href="css/style.css"></head>
+<body class="site-page">
+<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><nav class="site-links"><a href="merch.html">Store</a><a href="marketplace.html">Marketplace</a><a href="chat.html">Messages</a></nav></header>
+<main class="home-section route-page"><p class="eyebrow">Your account</p><h1 id="profileGreeting">Welcome to StudentMarket.</h1><p class="hero-text" id="profileDetail">Sign in to keep your profile and activity together.</p><div class="hero-actions"><a class="button button-primary" href="merch.html">Continue shopping</a><button class="button button-secondary" id="signOutButton" type="button">Sign out</button></div></main>
+<footer class="site-footer"><span>StudentMarket</span><a href="index.html">Back to home</a></footer>
+<script src="js/auth.js"></script>
+<script>const profileUser = getCurrentUser(); if (profileUser) { document.getElementById('profileGreeting').textContent = `Good to see you, ${profileUser.name}.`; document.getElementById('profileDetail').textContent = profileUser.email; } document.getElementById('signOutButton').addEventListener('click', () => { localStorage.removeItem(AUTH_KEY); window.location.href = 'index.html'; });</script>
+</body></html>

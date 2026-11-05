@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Create account — StudentMarket</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><a href="index.html" class="quiet-link">Back home</a></header>
+<main class="auth-layout">
+	<section class="auth-intro"><p class="eyebrow">Join the campus loop</p><h1>Good finds start with good people.</h1><p>Create your account and keep every part of your StudentMarket experience together.</p></section>
+	<form class="auth-card" id="registerForm">
+		<div><p class="eyebrow">New account</p><h2>Create account</h2></div>
+		<label>Name<input type="text" id="registerName" required autocomplete="name"></label>
+		<label>Email<input type="email" id="registerEmail" required autocomplete="email"></label>
+		<label>Password<input type="password" id="registerPassword" required minlength="4" autocomplete="new-password"></label>
+		<p class="form-message" id="registerMessage" role="status"></p>
+		<button class="button button-primary" type="submit">Create account</button>
+		<p class="form-foot">Already registered? <a href="login.html">Sign in</a></p>
+	</form>
+</main>
+<script src="js/auth.js"></script><script src="js/register.js"></script>
+</body>
+</html>

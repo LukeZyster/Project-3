@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign in — StudentMarket</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><a href="index.html" class="quiet-link">Back home</a></header>
+<main class="auth-layout">
+	<section class="auth-intro"><p class="eyebrow">Welcome back</p><h1>Your campus, in one place.</h1><p>Sign in to keep your cart, conversations, and listings moving with you.</p></section>
+	<form class="auth-card" id="loginForm">
+		<div><p class="eyebrow">Account access</p><h2>Sign in</h2></div>
+		<label>Email<input type="email" id="loginEmail" required autocomplete="email"></label>
+		<label>Password<input type="password" id="loginPassword" required minlength="4" autocomplete="current-password"></label>
+		<p class="form-message" id="loginMessage" role="status"></p>
+		<button class="button button-primary" type="submit">Continue</button>
+		<p class="form-foot">New here? <a href="register.html">Create an account</a></p>
+	</form>
+</main>
+<script src="js/auth.js"></script><script src="js/login.js"></script>
+</body>
+</html>

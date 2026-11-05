@@ -9,11 +9,8 @@ import java.util.List;
 
         private List<MarketplaceItem> marketplaceItems;
 
-        private MerchController merchController;
-
         public MarketplaceItemController() {
             marketplaceItems = new ArrayList<>();
-            merchController = new MerchController();
         }
 
 
