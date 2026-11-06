@@ -85,6 +85,16 @@ function renderMarketplaceListings() {
   grid.querySelectorAll('[data-remove-listing]').forEach(button => {
     button.addEventListener('click', () => removeMarketplaceListing(button.dataset.removeListing, button));
   });
+  grid.querySelectorAll('.listing-card__photo').forEach(image => {
+    image.addEventListener('error', () => {
+      const fallback = document.createElement('div');
+      const category = image.closest('.listing-card')?.querySelector('.listing-category')?.textContent.split(' · ')[0] || 'Other';
+      fallback.className = `listing-card__image ${escapeMarketplaceText(category.toLowerCase())}-image`;
+      fallback.setAttribute('aria-label', `${category} image unavailable`);
+      fallback.textContent = category;
+      image.replaceWith(fallback);
+    }, { once: true });
+  });
 }
 
 async function loadRemovedMarketplaceListings() {

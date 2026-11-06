@@ -5,6 +5,13 @@ let allItems = [];
 let activeCategory = 'All';
 let searchQuery = '';
 const SAVED_ITEMS_KEY = 'studentMarketSavedItems';
+const MERCH_IMAGE_BY_NAME = [
+  { pattern: /hoodie/, path: 'assets/images/merch/varsity-hoodie.jpg' },
+  { pattern: /\btee\b|t-shirt/, path: 'assets/images/merch/student-tee.jpg' },
+  { pattern: /mug/, path: 'assets/images/merch/varsity-mug.jpg' },
+  { pattern: /notebook|planner/, path: 'assets/images/merch/notebook.jpg' },
+  { pattern: /cap/, path: 'assets/images/merch/cap.jpg' }
+];
 const DEMO_ITEMS = [
   { id: 9001, name: 'Campus Hoodie', description: 'Official university hoodie with an embroidered crest.', price: 499.99, category: 'Clothing', stock: 12 },
   { id: 9002, name: 'Student Tee', description: 'Soft cotton tee for everyday campus wear.', price: 199.99, category: 'Clothing', stock: 20 },
@@ -51,13 +58,33 @@ function toggleStoreSave(item) {
 function escapeHtml(value) {
   return String(value == null ? '' : value).replace(/[&<>"']/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[character]));
 }
+
+function getMerchImage(item) {
+  if (typeof item.imageUrl === 'string' && item.imageUrl.trim()) return item.imageUrl.trim();
+  const name = String(item.name || '').toLowerCase();
+  return MERCH_IMAGE_BY_NAME.find(image => image.pattern.test(name))?.path || '';
+}
+
+function addProductImageFallbacks(container) {
+  container.querySelectorAll('.product-card-image img').forEach(image => {
+    image.addEventListener('error', () => {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'product-placeholder';
+      placeholder.textContent = image.alt || 'Product image unavailable';
+      image.replaceWith(placeholder);
+    }, { once: true });
+  });
+}
+
 function productCard(item) {
   const saved = getSavedStoreItems().some(savedItem => String(savedItem.id) === String(item.id));
-  const image = item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.name)}">` : `<div class="product-placeholder">${escapeHtml(item.name)}</div>`;
+  const imageUrl = getMerchImage(item);
+  const image = imageUrl ? `<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(item.name)}">` : `<div class="product-placeholder">${escapeHtml(item.name)}</div>`;
   return `<article class="product-card" data-id="${escapeHtml(item.id)}"><div class="product-card-image">${image}<button class="store-save-button ${saved ? 'is-saved' : ''}" type="button" data-save-id="${escapeHtml(item.id)}" aria-label="${saved ? 'Remove saved item' : 'Save item'}" aria-pressed="${saved}">${saved ? '♥' : '♡'}</button></div><div class="product-card-body"><div class="product-name">${escapeHtml(item.name)}</div><div class="product-price">R${Number(item.price).toFixed(2)}</div><button class="add-to-cart" data-id="${escapeHtml(item.id)}"><span>Add to Cart</span><span class="heart">＋</span></button></div></article>`;
 }
 function listingCard(item) {
-  const bg = item.imageUrl ? `style="background-image:url('${escapeHtml(item.imageUrl)}')"` : '';
+  const imageUrl = getMerchImage(item);
+  const bg = imageUrl ? `style="background-image:url('${escapeHtml(imageUrl)}')"` : '';
   return `<article class="listing-card" data-id="${escapeHtml(item.id)}"><div class="listing-card-image" ${bg}></div><div class="listing-card-body"><div class="listing-card-name">${escapeHtml(item.name)}</div><div class="listing-card-price">R${Number(item.price).toFixed(2)}</div></div></article>`;
 }
 function renderStore(items) {
@@ -68,6 +95,8 @@ function renderStore(items) {
   popular.innerHTML = items.slice(0, 4).map(productCard).join('') || '<div class="empty-state">No products found.</div>';
   second.innerHTML = items.slice(4, 8).map(productCard).join('');
   listings.innerHTML = items.map(listingCard).join('');
+  addProductImageFallbacks(popular);
+  addProductImageFallbacks(second);
   document.querySelectorAll('.add-to-cart').forEach(button => button.addEventListener('click', event => {
     event.stopPropagation();
     const item = allItems.find(product => String(product.id) === button.dataset.id);
@@ -93,10 +122,11 @@ function applyFilters() {
 async function loadMerch() {
   try {
     const response = await api.get('/merch');
-    allItems = Array.isArray(response) && response.length ? response : DEMO_ITEMS;
+    const products = Array.isArray(response) && response.length ? response : DEMO_ITEMS;
+    allItems = products.map(item => ({ ...item, imageUrl: getMerchImage(item) }));
   } catch (error) {
     console.info('Using the demo merch catalog while the store API is unavailable.');
-    allItems = DEMO_ITEMS;
+    allItems = DEMO_ITEMS.map(item => ({ ...item, imageUrl: getMerchImage(item) }));
   }
   applyFilters();
 }
