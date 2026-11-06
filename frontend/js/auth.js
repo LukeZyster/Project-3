@@ -70,10 +70,17 @@ function hideSignedOutAuthLinks() {
   });
 }
 
-function redirectAuthenticatedUsersAwayFromAuthPages() {
-  if (!getCurrentUser()) return;
+async function redirectAuthenticatedUsersAwayFromAuthPages() {
   const path = window.location.pathname.split('/').pop() || '';
-  if (path === 'login.html' || path === 'register.html') window.location.replace('profile.html');
+  if (path !== 'login.html' && path !== 'register.html') return;
+  try {
+    const response = await fetch(`${NOTIFICATION_API_BASE}/api/auth/me`, { credentials: 'include' });
+    if (!response.ok) throw new Error('No active sign-in session');
+    setCurrentUser(await response.json());
+    window.location.replace('profile.html');
+  } catch (error) {
+    localStorage.removeItem(AUTH_KEY);
+  }
 }
 
 function addNotificationsLink() {
