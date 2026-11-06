@@ -60,9 +60,10 @@ function escapeHtml(value) {
 }
 
 function getMerchImage(item) {
-  if (typeof item.imageUrl === 'string' && item.imageUrl.trim()) return item.imageUrl.trim();
   const name = String(item.name || '').toLowerCase();
-  return MERCH_IMAGE_BY_NAME.find(image => image.pattern.test(name))?.path || '';
+  const localImage = MERCH_IMAGE_BY_NAME.find(image => image.pattern.test(name))?.path;
+  if (localImage) return localImage;
+  return typeof item.imageUrl === 'string' ? item.imageUrl.trim() : '';
 }
 
 function addProductImageFallbacks(container) {

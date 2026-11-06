@@ -85,6 +85,20 @@ function recordCompletedPurchase(cart) {
     localStorage.setItem(TRANSACTIONS_KEY, JSON.stringify(transactions));
 }
 
+const CART_IMAGE_BY_NAME = [
+    { pattern: /hoodie/, path: 'assets/images/merch/varsity-hoodie.jpg' },
+    { pattern: /\btee\b|t-shirt/, path: 'assets/images/merch/student-tee.jpg' },
+    { pattern: /mug/, path: 'assets/images/merch/varsity-mug.jpg' },
+    { pattern: /notebook|planner/, path: 'assets/images/merch/notebook.jpg' },
+    { pattern: /cap/, path: 'assets/images/merch/cap.jpg' }
+];
+
+function getCartItemImage(item) {
+    const name = String(item.name || '').toLowerCase();
+    const localImage = CART_IMAGE_BY_NAME.find(image => image.pattern.test(name))?.path;
+    return localImage || item.imageUrl || '';
+}
+
 function renderCart() {
     const cart = getCart();
     const container = document.getElementById('cartItems');
@@ -101,10 +115,11 @@ function renderCart() {
     container.innerHTML = cart.map(item => {
         const lineTotal = Number(item.price) * item.quantity;
         total += lineTotal;
-        return `
+                const imageUrl = getCartItemImage(item);
+                return `
       <div class="product-card" style="margin-bottom:12px; flex-direction:row; padding:12px;">
         <div class="product-card-image" style="width:80px; height:80px; flex-shrink:0;">
-          ${item.imageUrl ? `<img src="${escapeCartHtml(item.imageUrl)}" alt="">` : ''}
+                    ${imageUrl ? `<img src="${escapeCartHtml(imageUrl)}" alt="${escapeCartHtml(item.name)}">` : `<span class="product-placeholder">${escapeCartHtml(item.name)}</span>`}
         </div>
         <div style="flex:1; padding-left:12px;">
           <div class="product-name">${escapeCartHtml(item.name)}</div>
