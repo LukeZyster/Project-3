@@ -29,6 +29,16 @@ The following guides illustrate how to use some features concretely:
 * [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
 * [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
 * [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
+
+### Accounts and admin access
+
+Set `ADMIN_EMAIL` and `ADMIN_PASSWORD` as backend environment secrets to create the initial administrator account. Use a valid email address and a unique password with at least 8 characters and no more than 72 UTF-8 bytes. The password is stored as a BCrypt hash; the configured admin password is reapplied when the backend starts. Do not commit the password or share it in chat.
+
+People can create regular accounts through the registration page. After signing in, the administrator can promote or demote users from the Account page. The backend checks the signed-in session and always keeps at least one administrator account.
+
+The production frontend and API are hosted on separate sites, so keep `SESSION_COOKIE_SAME_SITE=none` and `SESSION_COOKIE_SECURE=true` for production. For local HTTP development, set `SESSION_COOKIE_SAME_SITE=lax` and `SESSION_COOKIE_SECURE=false`.
+
+Use a persistent database for production account storage. Without an external database configuration, Spring Boot uses the development H2 database, which may not retain users across restarts.
 * [Using WebSocket to build an interactive web application](https://spring.io/guides/gs/messaging-stomp-websocket/)
 
 ### Maven Parent overrides

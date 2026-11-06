@@ -1,5 +1,18 @@
 let sharedReviews = [];
 
+function updateRatingDisplay(group) {
+	const selected = Number(group.querySelector('input:checked')?.value || 0);
+	group.dataset.selected = String(selected);
+	group.querySelectorAll('.rating-option').forEach(option => {
+		option.dataset.filled = String(Number(option.dataset.rating) <= selected);
+	});
+}
+
+function currentUserIsAdmin() {
+	const user = window.getCurrentUser?.();
+	return String(user?.role || '').toUpperCase() === 'ADMIN';
+}
+
 function addRatingRow(container, label, rating) {
 	const row = document.createElement('span');
 	row.className = 'review-entry-rating';
@@ -49,8 +62,42 @@ function renderReviews() {
 		comment.className = 'review-entry-comment';
 		comment.textContent = review.comment;
 		entry.append(header, ratings, comment);
+
+		if (currentUserIsAdmin()) {
+			const actions = document.createElement('div');
+			actions.className = 'review-entry-actions';
+			const deleteButton = document.createElement('button');
+			deleteButton.className = 'button button-secondary review-delete-button';
+			deleteButton.type = 'button';
+			deleteButton.textContent = 'Delete review';
+			deleteButton.addEventListener('click', () => deleteReview(review.id, deleteButton));
+			actions.append(deleteButton);
+			entry.append(actions);
+		}
 		list.append(entry);
 	});
+}
+
+async function deleteReview(reviewId, button) {
+	if (!window.confirm('Delete this review? This cannot be undone.')) return;
+	button.disabled = true;
+	try {
+		const response = await fetch(`${NOTIFICATION_API_BASE}/api/reviews/${encodeURIComponent(reviewId)}`, {
+			method: 'DELETE',
+			credentials: 'include'
+		});
+		if (!response.ok) {
+			const result = await response.json().catch(() => ({}));
+			throw new Error(result.error || 'The review could not be deleted.');
+		}
+		sharedReviews = sharedReviews.filter(review => String(review.id) !== String(reviewId));
+		renderReviews();
+	} catch (error) {
+		button.disabled = false;
+		const message = document.getElementById('reviewMessage');
+		message.textContent = error.message || 'The review could not be deleted.';
+		message.classList.add('is-error');
+	}
 }
 
 async function loadReviews() {
@@ -70,20 +117,13 @@ async function loadReviews() {
 	}
 }
 
-function getReviewerName() {
-	const user = window.getCurrentUser ? window.getCurrentUser() : null;
-	let profile = {};
-	try {
-		profile = JSON.parse(localStorage.getItem('studentMarketProfile') || '{}') || {};
-	} catch (error) {
-		profile = {};
-	}
-	return profile.name || (user && user.name) || 'Student';
-}
-
 document.addEventListener('DOMContentLoaded', () => {
 	const form = document.getElementById('reviewForm');
 	const message = document.getElementById('reviewMessage');
+	document.querySelectorAll('.rating-options').forEach(group => {
+		group.addEventListener('change', () => updateRatingDisplay(group));
+		updateRatingDisplay(group);
+	});
 	const query = new URLSearchParams(window.location.search);
 	document.getElementById('reviewItem').value = query.get('item') || '';
 	document.getElementById('reviewSeller').value = query.get('seller') || '';
@@ -99,8 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			seller: String(formData.get('seller')).trim(),
 			itemRating: Number(formData.get('itemRating')),
 			serviceRating: Number(formData.get('serviceRating')),
-			comment: String(formData.get('comment')).trim(),
-			reviewer: getReviewerName()
+			comment: String(formData.get('comment')).trim()
 		};
 
 		if (!review.item || !review.seller || !review.comment || review.itemRating < 1 || review.itemRating > 5 || review.serviceRating < 1 || review.serviceRating > 5) {
@@ -110,13 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 
 		try {
-			const user = window.getCurrentUser ? window.getCurrentUser() : null;
 			const response = await fetch(`${NOTIFICATION_API_BASE}/api/reviews`, {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-User-Id': String(user && user.id ? user.id : 1)
-				},
+				credentials: 'include',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(review)
 			});
 			if (!response.ok) {
@@ -125,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 			sharedReviews.unshift(await response.json());
 			form.reset();
+			document.querySelectorAll('.rating-options').forEach(updateRatingDisplay);
 			message.textContent = 'Your review has been posted.';
 			renderReviews();
 		} catch (error) {

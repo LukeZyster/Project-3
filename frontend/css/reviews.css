@@ -53,15 +53,13 @@
 .review-form > textarea:focus { outline: 3px solid rgba(15, 76, 92, .16); border-color: var(--seal-blue); }
 
 .rating-fieldset { display: grid; gap: 6px; margin: 8px 0 2px; padding: 0; border: 0; }
-.rating-options { display: flex; flex-direction: row-reverse; justify-content: flex-end; width: max-content; }
+.rating-options { display: flex; justify-content: flex-start; width: max-content; }
 .rating-option { position: relative; display: grid; place-items: center; width: 38px; height: 38px; color: #aab8c1; cursor: pointer; }
 .rating-option > span[aria-hidden] { font-size: 28px; line-height: 1; }
-.rating-option:has(input:checked),
-.rating-option:has(input:checked) ~ .rating-option { color: var(--accent); }
+.rating-option[data-filled="true"] { color: var(--accent); }
 .rating-option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .rating-option:focus-within { outline: 2px solid var(--seal-blue); outline-offset: -2px; border-radius: 5px; }
-.rating-option:hover,
-.rating-option:hover ~ .rating-option { color: #b92c55; }
+.rating-option:hover { color: #b92c55; }
 .sr-only {
   position: absolute;
   width: 1px;
@@ -89,6 +87,9 @@
 .review-entry-rating { color: var(--seal-blue); font-weight: 700; }
 .review-entry-rating span { color: var(--accent); letter-spacing: 0; }
 .review-entry-comment { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.55; overflow-wrap: anywhere; white-space: pre-wrap; }
+.review-entry-actions { display: flex; justify-content: flex-end; margin-top: 12px; }
+.review-delete-button { min-height: 34px; padding: 0 12px; border-color: #e7cbd3; color: #9f2347; font-size: 12px; }
+.review-delete-button:hover { border-color: #d93c6a; background: #fceaf0; }
 
 @media (max-width: 760px) {
   .reviews-shell { margin-top: 24px; padding: 0 20px; }

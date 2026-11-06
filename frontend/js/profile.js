@@ -38,8 +38,80 @@ function profileEscape(value) {
   return String(value == null ? '' : value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const user = getCurrentUser();
+async function refreshSignedInUser() {
+  try {
+    const response = await fetch(`${NOTIFICATION_API_BASE}/api/auth/me`, { credentials: 'include' });
+    if (!response.ok) {
+      localStorage.removeItem('studentMarketUser');
+      return null;
+    }
+    const user = await response.json();
+    setCurrentUser(user);
+    return user;
+  } catch (error) {
+    return null;
+  }
+}
+
+async function loadAdminUsers(currentUser) {
+  const section = document.getElementById('adminUserManagement');
+  if (currentUser.role !== 'ADMIN') {
+    section.hidden = true;
+    return;
+  }
+  section.hidden = false;
+  const list = document.getElementById('adminUsersList');
+  const message = document.getElementById('adminUsersMessage');
+  try {
+    const response = await fetch(`${NOTIFICATION_API_BASE}/api/admin/users`, { credentials: 'include' });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Could not load user accounts.');
+    document.getElementById('adminUserCount').textContent = `${result.length} accounts`;
+    list.replaceChildren();
+    result.forEach(account => {
+      const row = document.createElement('li');
+      const detail = document.createElement('span');
+      detail.textContent = `${account.name} · ${account.email} · ${account.role}`;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'button button-secondary';
+      button.textContent = account.role === 'ADMIN' ? 'Remove admin' : 'Make admin';
+      button.addEventListener('click', () => changeUserRole(account, button));
+      row.append(detail, button);
+      list.append(row);
+    });
+    message.textContent = '';
+  } catch (error) {
+    message.textContent = error.message || 'Could not load user accounts.';
+  }
+}
+
+async function changeUserRole(account, button) {
+  const nextRole = account.role === 'ADMIN' ? 'USER' : 'ADMIN';
+  const action = nextRole === 'ADMIN' ? 'Grant admin access to' : 'Remove admin access from';
+  if (!window.confirm(`${action} ${account.name}?`)) return;
+  button.disabled = true;
+  const message = document.getElementById('adminUsersMessage');
+  try {
+    const response = await fetch(`${NOTIFICATION_API_BASE}/api/admin/users/${encodeURIComponent(account.id)}/role`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ role: nextRole })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Could not update user role.');
+    message.textContent = `${result.name}'s role is now ${result.role}.`;
+    const refreshedUser = await refreshSignedInUser();
+    if (refreshedUser) await loadAdminUsers(refreshedUser);
+  } catch (error) {
+    button.disabled = false;
+    message.textContent = error.message || 'Could not update user role.';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const user = await refreshSignedInUser();
   const profileContent = document.getElementById('profileContent');
   if (!user) {
     setText('profileGreeting', 'You are not signed in yet.');
@@ -93,10 +165,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('signOutButton').addEventListener('click', () => {
-    localStorage.removeItem('studentMarketUser');
-    window.location.href = 'index.html';
+    fetch(`${NOTIFICATION_API_BASE}/api/auth/logout`, { method: 'POST', credentials: 'include' })
+      .finally(() => {
+        localStorage.removeItem('studentMarketUser');
+        window.location.href = 'index.html';
+      });
   });
   renderProfileItems();
+  await loadAdminUsers(user);
   window.addEventListener('storage', event => {
     if ([SAVED_KEY, LISTINGS_KEY].includes(event.key)) renderProfileItems();
   });

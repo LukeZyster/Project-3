@@ -10,6 +10,7 @@ const STARTER_LISTINGS = [
   { id: 'demo-kettle', name: 'Hot Water Kettle', category: 'Appliances', price: 260, condition: 'Good', description: 'Small, clean kettle. Great for a residence room.', campus: 'CPUT District Six', seller: 'Liam', createdAt: '2026-10-23T10:00:00.000Z' }
 ];
 let selectedCategory = 'All';
+let removedListingIds = new Set();
 
 function safeRead(key, fallback) {
   try {
@@ -29,7 +30,12 @@ function getMarketplaceListings() {
   return listings;
 }
 
-function getSavedMarketplaceItems() { return safeRead(SAVED_KEY, []); }
+function getSavedMarketplaceItems() { return safeRead(SAVED_KEY, []).filter(item => !removedListingIds.has(String(item.id))); }
+
+function isMarketplaceAdmin() {
+  const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+  return String(user && user.role || '').toUpperCase() === 'ADMIN';
+}
 
 function escapeMarketplaceText(value) {
   return String(value == null ? '' : value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
@@ -51,6 +57,7 @@ function renderMarketplaceListings() {
   const query = (document.getElementById('marketSearch')?.value || '').trim().toLowerCase();
   const savedIds = new Set(getSavedMarketplaceItems().map(item => String(item.id)));
   const listings = getMarketplaceListings().filter(item => {
+    if (removedListingIds.has(String(item.id))) return false;
     const categoryMatches = selectedCategory === 'All' || item.category === selectedCategory;
     const text = [item.name, item.description, item.category, item.condition, item.campus, item.seller].join(' ').toLowerCase();
     return categoryMatches && (!query || text.includes(query));
@@ -62,7 +69,10 @@ function renderMarketplaceListings() {
     const image = item.imageUrl
       ? `<img class="listing-card__photo" src="${escapeMarketplaceText(item.imageUrl)}" alt="${escapeMarketplaceText(item.name)}">`
       : `<div class="listing-card__image ${escapeMarketplaceText(String(item.category || 'Other').toLowerCase())}-image" aria-hidden="true">${escapeMarketplaceText(item.category || 'Student item')}</div>`;
-    return `<article class="listing-card"><div class="market-image-wrap">${image}<button class="save-item-button ${saved ? 'is-saved' : ''}" type="button" data-save-id="${escapeMarketplaceText(item.id)}" aria-label="${saved ? 'Remove from saved items' : 'Save item'}" aria-pressed="${saved}">${saved ? '♥' : '♡'}</button></div><div class="listing-card__body"><p class="listing-category">${escapeMarketplaceText(item.category)} · ${escapeMarketplaceText(item.condition)}</p><h3>${escapeMarketplaceText(item.name)}</h3><p class="listing-price">R${price}</p><p>${escapeMarketplaceText(item.description)}</p><p class="listing-meta">${escapeMarketplaceText(item.campus)} · Listed by ${escapeMarketplaceText(item.seller)}</p><a class="text-link" href="chat.html">Contact seller →</a></div></article>`;
+    const moderationButton = isMarketplaceAdmin()
+      ? `<button class="button button-secondary listing-remove-button" type="button" data-remove-listing="${escapeMarketplaceText(item.id)}">Remove listing</button>`
+      : '';
+    return `<article class="listing-card"><div class="market-image-wrap">${image}<button class="save-item-button ${saved ? 'is-saved' : ''}" type="button" data-save-id="${escapeMarketplaceText(item.id)}" aria-label="${saved ? 'Remove from saved items' : 'Save item'}" aria-pressed="${saved}">${saved ? '♥' : '♡'}</button></div><div class="listing-card__body"><p class="listing-category">${escapeMarketplaceText(item.category)} · ${escapeMarketplaceText(item.condition)}</p><h3>${escapeMarketplaceText(item.name)}</h3><p class="listing-price">R${price}</p><p>${escapeMarketplaceText(item.description)}</p><p class="listing-meta">${escapeMarketplaceText(item.campus)} · Listed by ${escapeMarketplaceText(item.seller)}</p><a class="text-link" href="chat.html">Contact seller →</a>${moderationButton}</div></article>`;
   }).join('');
   document.getElementById('listingCount').textContent = `${listings.length} ${listings.length === 1 ? 'listing' : 'listings'}`;
   document.getElementById('marketEmptyState').hidden = listings.length !== 0;
@@ -72,6 +82,51 @@ function renderMarketplaceListings() {
       if (listing) toggleSavedMarketplaceItem(listing);
     });
   });
+  grid.querySelectorAll('[data-remove-listing]').forEach(button => {
+    button.addEventListener('click', () => removeMarketplaceListing(button.dataset.removeListing, button));
+  });
+}
+
+async function loadRemovedMarketplaceListings() {
+  try {
+    const response = await fetch(`${NOTIFICATION_API_BASE}/api/moderation/listings`);
+    if (!response.ok) throw new Error('Moderation data could not be loaded.');
+    const ids = await response.json();
+    if (!Array.isArray(ids)) throw new Error('Moderation data was invalid.');
+    removedListingIds = new Set(ids.map(String));
+
+    const listings = getMarketplaceListings();
+    const visibleListings = listings.filter(item => !removedListingIds.has(String(item.id)));
+    if (visibleListings.length !== listings.length) localStorage.setItem(LISTINGS_KEY, JSON.stringify(visibleListings));
+    const savedItems = safeRead(SAVED_KEY, []);
+    const visibleSavedItems = savedItems.filter(item => !removedListingIds.has(String(item.id)));
+    if (visibleSavedItems.length !== savedItems.length) localStorage.setItem(SAVED_KEY, JSON.stringify(visibleSavedItems));
+    document.getElementById('marketModerationMessage').textContent = '';
+  } catch (error) {
+    document.getElementById('marketModerationMessage').textContent = 'Marketplace moderation status could not be checked.';
+  }
+  renderMarketplaceListings();
+}
+
+async function removeMarketplaceListing(listingId, button) {
+  if (!window.confirm('Remove this listing from the marketplace for all users?')) return;
+  button.disabled = true;
+  try {
+    const response = await fetch(`${NOTIFICATION_API_BASE}/api/moderation/listings/${encodeURIComponent(listingId)}`, {
+      method: 'DELETE',
+      credentials: 'include'
+    });
+    if (!response.ok) {
+      const result = await response.json().catch(() => ({}));
+      throw new Error(result.error || 'The listing could not be removed.');
+    }
+    removedListingIds.add(String(listingId));
+    document.getElementById('marketModerationMessage').textContent = 'Listing removed from the marketplace.';
+    await loadRemovedMarketplaceListings();
+  } catch (error) {
+    button.disabled = false;
+    document.getElementById('marketModerationMessage').textContent = error.message || 'The listing could not be removed.';
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -81,8 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMarketplaceListings();
   }));
   document.getElementById('marketSearch')?.addEventListener('input', renderMarketplaceListings);
+  window.addEventListener('focus', loadRemovedMarketplaceListings);
+  window.setInterval(loadRemovedMarketplaceListings, 30000);
   window.addEventListener('storage', event => {
     if (event.key === LISTINGS_KEY || event.key === SAVED_KEY) renderMarketplaceListings();
   });
-  renderMarketplaceListings();
+  loadRemovedMarketplaceListings();
 });
