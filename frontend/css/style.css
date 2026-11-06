@@ -8,6 +8,8 @@ a { color:inherit; }
 .brand { display:inline-flex; align-items:center; gap:10px; text-decoration:none; font-weight:700; font-size:17px; }
 .brand-mark { display:grid; place-items:center; width:32px; height:32px; border-radius:9px; color:var(--white); background:var(--seal-blue); font-family:'Space Grotesk',sans-serif; }
 .site-links { display:flex; align-items:center; flex-wrap:wrap; gap:22px; color:var(--muted); font-size:14px; }
+.site-links a[data-notifications-link] { display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+.site-links [data-notification-count] { position:static; flex:0 0 auto; min-width:17px; height:17px; padding:0 4px; display:inline-flex; align-items:center; justify-content:center; border-radius:999px; color:var(--white); background:var(--accent); font:700 10px/1 'DM Sans',sans-serif; }
 .site-links a,.quiet-link { text-decoration:none; }
 .site-links a:hover,.quiet-link:hover,.text-link:hover { color:var(--seal-blue); }
 h1,h2,h3 { font-family:'Space Grotesk',sans-serif; }
