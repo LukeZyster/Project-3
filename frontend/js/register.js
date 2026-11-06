@@ -36,9 +36,8 @@ function nextUrl() {
     try {
       const res = await SM.signUp({ name, email, password, campus: form.campus.value.trim() });
       if (res.needsConfirmation) {
-        form.innerHTML = '<span class="eyebrow">Almost there</span><h2>Check your inbox.</h2><p class="notice">' + UI.icon('mail-check') + '<span>We sent a confirmation link to <b>' + UI.esc(email) + '</b>. Click it, then come back and sign in.</span></p><a class="btn btn--primary btn--block" href="login.html">Go to sign in</a>';
-        UI.refreshIcons();
-        return;
+        try { await SM.signIn({ email, password }); }
+        catch (e) { UI.toast('Account created. Please sign in.'); setTimeout(() => { location.href = 'login.html'; }, 800); return; }
       }
       UI.toast('Welcome to StudentMarket, ' + name.split(' ')[0] + '!');
       location.href = SM.isStaffEmail(email) ? 'admin.html' : nextUrl();
