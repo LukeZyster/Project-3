@@ -28,7 +28,7 @@ h1,h2,h3 { font-family:'Space Grotesk',sans-serif; }
 .page-wide-image { display:block; width:100%; height:260px; object-fit:cover; opacity:.78; mix-blend-mode:multiply; filter:saturate(.9) contrast(.96); mask-image:linear-gradient(90deg,transparent 0%,#000 5%,#000 95%,transparent 100%); }
 .home-feature-image { max-width:1180px; margin:0 auto 100px; padding:0 32px; }
 .page-route-image { display:block; width:min(100%,520px); height:240px; margin-bottom:30px; object-fit:cover; opacity:.76; mix-blend-mode:multiply; filter:saturate(.9) contrast(.96); mask-image:linear-gradient(180deg,transparent 0%,#000 8%,#000 92%,transparent 100%); }
-.marketplace-hero-image { width:360px; height:220px; opacity:.9; }
+.marketplace-hero-image { width:360px; height:220px; opacity:1; mix-blend-mode:normal; filter:saturate(1) contrast(1.02); mask-image:linear-gradient(180deg,transparent 0%,#000 5%,#000 95%,transparent 100%); }
 .hero-panel-label { color:var(--accent-soft); font-size:12px; text-transform:uppercase; letter-spacing:.12em; }
 .hero-panel strong { font:600 42px/1 'Space Grotesk',sans-serif; }
 .home-section { max-width:1180px; margin:auto; padding:0 32px 100px; }
