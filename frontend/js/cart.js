@@ -1,83 +1,48 @@
-function getCart() {
-    return JSON.parse(localStorage.getItem('cart') || '[]');
-}
+// Cart + checkout. The cart lives on this device; placing an order saves it to Supabase.
+(async function () {
+  await UI.ready;
+  const { esc, money, icon } = UI;
+  const root = document.getElementById('cartRoot');
 
-function saveCart(cart) {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-function renderCart() {
-    const cart = getCart();
-    const container = document.getElementById('cartItems');
-    const summary = document.getElementById('cartSummary');
-
-    if (cart.length === 0) {
-        container.innerHTML = `<div class="empty-state">Your cart is empty.</div>`;
-        summary.style.display = 'none';
-        return;
+  function render() {
+    const items = UI.cart.get();
+    if (!items.length) {
+      root.innerHTML = '<div class="empty">' + icon('shopping-bag') + '<h3>Your cart is empty</h3><p>Hoodies, mugs and notebooks are waiting in the campus store.</p><a class="btn btn--primary" href="merch.html">Visit the store</a></div>';
+      UI.refreshIcons(); return;
     }
+    const total = items.reduce((s, i) => s + i.price * i.quantity, 0);
+    const count = items.reduce((s, i) => s + i.quantity, 0);
+    root.innerHTML = '<div class="cart"><div class="panel">' + items.map(i =>
+      '<div class="cart-line"><img src="' + esc(i.image_url) + '" alt=""><div class="cart-line__info"><b>' + esc(i.name) + '</b><span class="muted" style="font-size:13px">' + money(i.price) + ' each</span></div>' +
+      '<div class="qty"><button data-q="-1" data-id="' + esc(i.id) + '" aria-label="Fewer">' + icon('minus') + '</button><span>' + i.quantity + '</span><button data-q="1" data-id="' + esc(i.id) + '" aria-label="More">' + icon('plus') + '</button></div>' +
+      '<b style="min-width:84px;text-align:right">' + money(i.price * i.quantity) + '</b><button class="icon-btn" data-rm="' + esc(i.id) + '" aria-label="Remove">' + icon('trash-2') + '</button></div>').join('') + '</div>' +
+      '<aside class="summary panel"><h3 style="font-size:20px">Order summary</h3><div class="summary__row"><span>Items (' + count + ')</span><span>' + money(total) + '</span></div><div class="summary__row"><span>Collection</span><span style="color:var(--ok);font-weight:700">Free</span></div><div class="summary__total"><span>Total</span><span>' + money(total) + '</span></div>' +
+      '<button class="btn btn--accent btn--block" id="checkout">' + icon('check') + 'Place order</button><p class="muted" style="font-size:12.5px;text-align:center">Pay by card or cash when you collect.</p></aside></div>';
+    UI.refreshIcons();
+  }
 
-    let total = 0;
-    container.innerHTML = cart.map(item => {
-        const lineTotal = Number(item.price) * item.quantity;
-        total += lineTotal;
-        return `
-      <div class="product-card" style="margin-bottom:12px; flex-direction:row; padding:12px;">
-        <div class="product-card-image" style="width:80px; height:80px; flex-shrink:0;">
-          ${item.imageUrl ? `<img src="${item.imageUrl}" alt="">` : ''}
-        </div>
-        <div style="flex:1; padding-left:12px;">
-          <div class="product-name">${item.name}</div>
-          <div class="product-price">R${Number(item.price).toFixed(2)}</div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button class="pill" onclick="changeQty(${item.id}, -1)">−</button>
-            <span>${item.quantity}</span>
-            <button class="pill" onclick="changeQty(${item.id}, 1)">+</button>
-            <button class="pill" onclick="removeItem(${item.id})" style="margin-left:auto;">Remove</button>
-          </div>
-        </div>
-      </div>
-    `;
-    }).join('');
-
-    document.getElementById('cartTotal').textContent = `R${total.toFixed(2)}`;
-    summary.style.display = 'block';
-
-    document.getElementById('clearCartBtn').onclick = () => {
-        if (confirm('Clear your cart?')) {
-            saveCart([]);
-            renderCart();
-        }
-    };
-
-    document.getElementById('checkoutBtn').onclick = () => {
-      const order = {
-        id: `SM-${Date.now().toString().slice(-6)}`,
-        items: cart,
-        total,
-        createdAt: new Date().toISOString()
-      };
-      localStorage.setItem('lastOrder', JSON.stringify(order));
-      saveCart([]);
-      container.innerHTML = `<div class="empty-state"><strong>Order ${order.id} placed.</strong><br>Your campus essentials are on their way.</div>`;
-      summary.style.display = 'none';
-    };
-}
-
-function changeQty(id, delta) {
-    const cart = getCart();
-    const item = cart.find(x => x.id === id);
-    if (!item) return;
-    item.quantity += delta;
-    if (item.quantity < 1) item.quantity = 1;
-    saveCart(cart);
-    renderCart();
-}
-
-function removeItem(id) {
-    const cart = getCart().filter(x => x.id !== id);
-    saveCart(cart);
-    renderCart();
-}
-
-document.addEventListener('DOMContentLoaded', renderCart);
+  root.addEventListener('click', async e => {
+    const q = e.target.closest('[data-q]'), rm = e.target.closest('[data-rm]');
+    if (q || rm) {
+      let items = UI.cart.get();
+      const id = (q || rm).dataset.id;
+      const it = items.find(i => String(i.id) === id);
+      if (rm || (it.quantity + Number(q.dataset.q) < 1)) items = items.filter(i => String(i.id) !== id);
+      else it.quantity = Math.min(20, it.quantity + Number(q.dataset.q));
+      UI.cart.set(items); render(); return;
+    }
+    if (e.target.closest('#checkout')) {
+      if (!UI.user) { location.href = 'login.html?next=cart.html&why=' + encodeURIComponent('Sign in to place your order.'); return; }
+      const btn = e.target.closest('#checkout'); UI.busy(btn, true, 'Placing order…');
+      const items = UI.cart.get();
+      const total = Math.round(items.reduce((s, i) => s + i.price * i.quantity, 0) * 100) / 100;
+      try {
+        const order = await SM.placeOrder(items, total);
+        UI.cart.set([]);
+        root.innerHTML = '<div class="panel receipt"><span class="receipt__ic">' + icon('check') + '</span><h2>Order placed!</h2><p class="muted">Order <b>#' + esc(String(order.id).slice(0, 8).toUpperCase()) + '</b> · ' + money(total) + '. Show this number at the campus store counter.</p><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px"><a class="btn btn--primary" href="profile.html#orders">View my orders</a><a class="btn btn--ghost" href="marketplace.html">Browse the marketplace</a></div></div>';
+        UI.refreshIcons(); UI.updateBadges();
+      } catch (err) { UI.toast(err.message, 'error'); UI.busy(btn, false); }
+    }
+  });
+  render();
+})();

@@ -1,9 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Marketplace — StudentMarket</title><link rel="stylesheet" href="css/style.css"></head>
-<body class="site-page">
-<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><nav class="site-links"><a href="merch.html">Store</a><a href="chat.html">Messages</a><a href="profile.html">Account</a></nav></header>
-<main class="home-section route-page"><p class="eyebrow">Student marketplace</p><h1>Find useful things nearby.</h1><p class="hero-text">The student-to-student marketplace is ready for listings and conversations. Start with official campus essentials while the community board fills up.</p><div class="hero-actions"><a class="button button-primary" href="merch.html">Shop the store</a><a class="button button-secondary" href="login.html">Sign in to sell</a></div></main>
-<footer class="site-footer"><span>StudentMarket</span><a href="index.html">Back to home</a></footer>
-<script src="js/auth.js"></script>
-</body></html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketplace — StudentMarket</title>
+  <meta name="description" content="Browse textbooks, tech, res essentials and more listed by students on your campus.">
+  <meta name="theme-color" content="#0d1d2a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header id="siteNav" class="nav"></header>
+
+  <main class="wrap">
+    <section class="page-head reveal">
+      <span class="eyebrow">Marketplace</span>
+      <h1>Everything on the board.</h1>
+      <p>Listed by students, collected on campus. Message a seller, agree on a spot, done.</p>
+    </section>
+
+    <div class="market">
+      <aside class="filters panel" id="filters" aria-label="Filters">
+        <div><h4>Category</h4><div class="chips" id="catChips"></div></div>
+        <div><h4>Condition</h4><div class="chips" id="condChips"></div></div>
+        <div><h4>Price (R)</h4><div class="price-row"><input class="input" id="minPrice" type="number" min="0" placeholder="Min" inputmode="numeric"><input class="input" id="maxPrice" type="number" min="0" placeholder="Max" inputmode="numeric"></div></div>
+        <div style="display:grid;gap:12px">
+          <label class="switch"><input type="checkbox" id="swapOnly"><i></i>Open to swaps only</label>
+          <label class="switch"><input type="checkbox" id="hideSold" checked><i></i>Hide sold items</label>
+        </div>
+        <button class="btn btn--ghost btn--sm" id="resetFilters" type="button"><i data-lucide="rotate-ccw"></i>Reset filters</button>
+        <button class="btn btn--primary mobile-filters" id="closeFilters" type="button">Show results</button>
+      </aside>
+
+      <section>
+        <div class="toolbar">
+          <label class="input-icon"><i data-lucide="search"></i><span class="sr-only">Search</span><input class="input" id="q" type="search" placeholder="Search textbooks, kettles, calculators…" autocomplete="off"></label>
+          <select class="input" id="sort" aria-label="Sort">
+            <option value="new">Newest first</option>
+            <option value="low">Price: low to high</option>
+            <option value="high">Price: high to low</option>
+          </select>
+          <button class="btn btn--ghost mobile-filters" id="openFilters" type="button"><i data-lucide="sliders-horizontal"></i>Filters</button>
+          <span class="result-count" id="count"></span>
+        </div>
+        <div class="grid" id="grid">
+          <div class="skel skel--card"></div><div class="skel skel--card"></div><div class="skel skel--card"></div><div class="skel skel--card"></div><div class="skel skel--card"></div><div class="skel skel--card"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer id="siteFooter"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/marketplace.js"></script>
+</body>
+</html>

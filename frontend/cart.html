@@ -1,40 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart — StudentMarket</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/merch.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart — StudentMarket</title>
+  <meta name="description" content="Your StudentMarket campus store cart.">
+  <meta name="theme-color" content="#0d1d2a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
 </head>
-<body class="merch-page">
+<body>
+  <header id="siteNav" class="nav"></header>
 
-<header class="app-header">
-    <a href="merch.html" class="icon-btn" aria-label="Back to store">←</a>
-    <h1 class="app-title">Your Cart</h1>
-    <a href="index.html" class="icon-btn" aria-label="Home">⌂</a>
-</header>
+  <main class="wrap">
+    <section class="page-head reveal"><span class="eyebrow">Your cart</span><h1>Ready to collect?</h1><p>Place the order here, then pay and pick it up at the campus store.</p></section>
+    <div id="cartRoot"></div>
+  </main>
+  <footer id="siteFooter"></footer>
 
-<main class="section">
-    <div id="cartItems"></div>
-
-    <div id="cartSummary" class="card" style="display:none;">
-        <div style="display:flex; justify-content:space-between; padding:12px 0;">
-            <strong>Total</strong>
-            <strong id="cartTotal">R0.00</strong>
-        </div>
-        <button class="add-to-cart" id="checkoutBtn" style="justify-content:center;">
-            Checkout
-        </button>
-        <button class="pill" id="clearCartBtn" style="margin-top:8px; width:100%;">
-            Clear Cart
-        </button>
-    </div>
-</main>
-
-<script src="js/api.js?v=3"></script>
-<script src="js/auth.js"></script>
-<script src="js/navbar.js"></script>
-<script src="js/cart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/cart.js"></script>
 </body>
 </html>

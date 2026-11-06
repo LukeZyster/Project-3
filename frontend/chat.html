@@ -1,9 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Messages — StudentMarket</title><link rel="stylesheet" href="css/style.css"></head>
-<body class="site-page">
-<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><nav class="site-links"><a href="merch.html">Store</a><a href="marketplace.html">Marketplace</a><a href="profile.html">Account</a></nav></header>
-<main class="home-section route-page"><p class="eyebrow">Your conversations</p><h1>Keep the campus loop moving.</h1><p class="hero-text">Messages from sellers and buyers will appear here. Browse the store or marketplace to start your first conversation.</p><div class="hero-actions"><a class="button button-primary" href="marketplace.html">Browse marketplace</a><a class="button button-secondary" href="merch.html">Return to store</a></div></main>
-<footer class="site-footer"><span>StudentMarket</span><a href="index.html">Back to home</a></footer>
-<script src="js/auth.js"></script>
-</body></html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages — StudentMarket</title>
+  <meta name="description" content="Chat with buyers and sellers on StudentMarket.">
+  <meta name="theme-color" content="#0d1d2a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header id="siteNav" class="nav"></header>
+
+  <main class="wrap">
+    <div class="chat panel" id="chat">
+      <aside class="threads">
+        <div class="threads__head"><span class="eyebrow">Inbox</span><h2 style="margin-top:8px">Messages</h2></div>
+        <div class="threads__list" id="threads"></div>
+      </aside>
+      <section class="convo" id="convo">
+        <div class="convo__empty">
+          <i data-lucide="messages-square"></i>
+          <h3 style="color:var(--ink)">Pick a conversation</h3>
+          <p>Message a seller from any listing and the chat lands here.</p>
+          <a class="btn btn--primary btn--sm" href="marketplace.html">Browse listings</a>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer id="siteFooter"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

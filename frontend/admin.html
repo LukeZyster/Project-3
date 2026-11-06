@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — StudentMarket</title>
+  <meta name="description" content="StudentMarket admin dashboard.">
+  <meta name="theme-color" content="#0d1d2a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body class="is-admin-page" data-no-tabbar>
+  <header id="siteNav" class="nav"></header>
+
+  <main class="admin">
+    <aside class="admin__side">
+      <div class="admin__badge"><i data-lucide="shield-check"></i><span>Admin<br><b>control room</b></span></div>
+      <nav class="admin__nav" id="adminNav">
+        <button class="is-active" data-view="overview"><i data-lucide="layout-dashboard"></i>Overview</button>
+        <button data-view="reports"><i data-lucide="flag"></i>Reports<span class="count-badge" data-open-reports hidden></span></button>
+        <button data-view="listings"><i data-lucide="package-search"></i>Listings</button>
+        <button data-view="users"><i data-lucide="users-round"></i>Users</button>
+        <button data-view="rules"><i data-lucide="octagon-x"></i>Blocked items</button>
+      </nav>
+      <p class="admin__note"><i data-lucide="scale"></i>Admins have the final say. Every action is sent to the user as a notification.</p>
+    </aside>
+
+    <section class="admin__main">
+      <header class="admin__head">
+        <div><span class="eyebrow" id="viewEyebrow">Overview</span><h1 id="viewTitle">Control room</h1></div>
+        <a class="btn btn--ghost btn--sm" href="marketplace.html"><i data-lucide="external-link"></i>View marketplace</a>
+      </header>
+
+      <div data-v="overview">
+        <div class="admin-kpis" id="kpis"></div>
+        <div class="admin-grid">
+          <div class="panel admin-card"><div class="admin-card__head"><h3>Open reports</h3><button class="link-arrow" data-jump="reports">All reports <i data-lucide="arrow-right"></i></button></div><div id="ovReports"></div></div>
+          <div class="panel admin-card"><div class="admin-card__head"><h3>Auto-flagged listings</h3><button class="link-arrow" data-jump="listings">All listings <i data-lucide="arrow-right"></i></button></div><div id="ovFlagged"></div></div>
+          <div class="panel admin-card"><div class="admin-card__head"><h3>Newest members</h3><button class="link-arrow" data-jump="users">All users <i data-lucide="arrow-right"></i></button></div><div id="ovUsers"></div></div>
+        </div>
+      </div>
+
+      <div data-v="reports" hidden>
+        <div class="chips" id="repFilter" style="margin-bottom:16px"><button class="chip is-active" data-f="open">Open</button><button class="chip" data-f="resolved">Resolved</button><button class="chip" data-f="dismissed">Dismissed</button><button class="chip" data-f="all">All</button></div>
+        <div id="reportsList" class="admin-list"></div>
+      </div>
+
+      <div data-v="listings" hidden>
+        <div class="toolbar"><label class="input-icon"><i data-lucide="search"></i><input class="input" id="lq" type="search" placeholder="Search title, seller or category"></label>
+          <select class="input" id="lf"><option value="all">All statuses</option><option value="flagged">Auto-flagged</option><option value="available">Available</option><option value="sold">Sold</option><option value="archived">Hidden</option></select></div>
+        <div class="panel table-wrap"><table class="table" id="listingsTable"></table></div>
+      </div>
+
+      <div data-v="users" hidden>
+        <div class="toolbar"><label class="input-icon"><i data-lucide="search"></i><input class="input" id="uq" type="search" placeholder="Search name, email or username"></label>
+          <select class="input" id="uf"><option value="all">Everyone</option><option value="admin">Admins</option><option value="student">Students</option><option value="restricted">Restricted</option><option value="banned">Banned</option></select></div>
+        <div class="panel table-wrap"><table class="table" id="usersTable"></table></div>
+      </div>
+
+      <div data-v="rules" hidden>
+        <div class="panel admin-card">
+          <p class="muted">Listings whose title or description contains one of these words are rejected by the database before they're saved. Matching is whole-word, so "gin" blocks gin but not "engine".</p>
+          <form class="toolbar" id="termForm" style="margin:18px 0 6px"><input class="input" name="term" placeholder="Word or phrase, e.g. hookah" maxlength="40" required style="flex:1;min-width:180px"><input class="input" name="reason" placeholder="Category, e.g. Tobacco &amp; vaping" maxlength="60" style="flex:1;min-width:180px"><button class="btn btn--primary" type="submit"><i data-lucide="plus"></i>Block word</button></form>
+          <div id="terms"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="siteFooter"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

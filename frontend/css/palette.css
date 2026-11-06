@@ -1,0 +1,93 @@
+/* Shared palette overrides and visual polish for the merch and notifications pages. */
+:root {
+    --store-ink: #0d1d2a !important;
+    --store-muted: #5d6f7d !important;
+    --store-line: #dfe8ee !important;
+    --store-paper: #edf4f8 !important;
+    --store-white: #ffffff !important;
+    --store-teal: #0f4c5c !important;
+    --store-dark: #0a2339 !important;
+    --store-lime: #f7d8e1 !important;
+
+    --navy: #0d1d2a;
+    --card: #0f4c5c;
+    --card-read: #17364b;
+    --accent: #d93c6a;
+    --text-on-dark: #ffffff;
+    --muted-on-dark: #c4d2dc;
+    --label: #5d6f7d;
+    --danger: #b4234d;
+}
+
+/* Merch page palette and finish */
+body.merch-page {
+    color: #0d1d2a;
+    background: radial-gradient(circle at 88% 8%, rgba(217, 60, 106, .12) 0, transparent 28%), #edf4f8;
+}
+.merch-page .app-header,
+.merch-page .app-header::before { color: #0d1d2a; }
+.merch-page .icon-btn,
+.merch-page .search-icon,
+.merch-page .section-link,
+.merch-page .product-price,
+.merch-page .listing-card-price,
+.merch-page .bottom-nav-item:hover,
+.merch-page .bottom-nav-item.active { color: #0f4c5c; }
+.merch-page .search-input:focus { border-color: #0f4c5c; box-shadow: 0 0 0 3px rgba(15, 76, 92, .14); }
+.merch-page .pill:hover,
+.merch-page .pill.active { border-bottom-color: #d93c6a; color: #0f4c5c; }
+.merch-page .banner-placeholder {
+    background: linear-gradient(110deg, #0a2339 0%, #0f4c5c 68%, #28718a 100%);
+    box-shadow: 18px 18px 0 #f7d8e1;
+}
+.merch-page .banner-placeholder::before { color: #f7d8e1; }
+.merch-page .product-card,
+.merch-page .listing-card { border-color: rgba(15, 54, 82, .10); box-shadow: 0 12px 30px rgba(11, 37, 61, .05); }
+.merch-page .product-card { border-radius: 16px; transition: transform .22s ease, box-shadow .22s ease; }
+.merch-page .product-card:hover { box-shadow: 0 20px 42px rgba(13, 29, 42, .14); transform: translateY(-4px); }
+.merch-page .listing-card { border-radius: 14px; }
+.merch-page .product-card-image,
+.merch-page .listing-card-image { background-color: #e2edf3; }
+.merch-page .add-to-cart { color: #0f4c5c; border-radius: 999px; transition: all .2s ease; }
+.merch-page .add-to-cart:hover { border-color: #d93c6a; background: #fceaf0; }
+.merch-page .add-to-cart.added { border-color: #0f4c5c; color: #ffffff; background: #0f4c5c; }
+.merch-page .shop-banner { overflow: hidden; border-radius: 20px; background: #0a2339; box-shadow: 0 18px 44px rgba(7, 27, 49, .15); }
+.merch-page .shop-banner-image { background-image: linear-gradient(135deg, rgba(217, 60, 106, .28), rgba(15, 76, 92, .16)), url('../assets/images/merch/varsity-hoodie.jpg'); }
+.merch-page .shop-now-btn { color: #ffffff; background: #d93c6a; border-radius: 999px; transition: background .2s ease, transform .2s ease; }
+.merch-page .shop-now-btn:hover { background: #b92c55; transform: translateY(-2px); }
+.merch-page .bottom-nav { border-top-color: #dfe8ee; }
+.merch-page .empty-state { border-color: #dfe8ee; }
+.merch-page .search-input { border-radius: 999px; box-shadow: 0 6px 18px rgba(11, 37, 61, .04); }
+
+/* Notifications page palette and finish */
+body:not(.merch-page) { background: #edf4f8; color: #0d1d2a; }
+body:not(.merch-page) .page { background: #edf4f8; }
+body:not(.merch-page) .top-header,
+body:not(.merch-page) .bottom-nav { background: rgba(255, 255, 255, .97); }
+body:not(.merch-page) .top-header { box-shadow: 0 1px 0 rgba(15, 54, 82, .08); }
+body:not(.merch-page) .back-button { color: #0d1d2a; }
+body:not(.merch-page) .text-button,
+body:not(.merch-page) .read-button { color: #d93c6a; }
+body:not(.merch-page) .unread-badge { background: #d93c6a; color: #ffffff; }
+body:not(.merch-page) .notification-card { background: #0f4c5c; box-shadow: 0 10px 28px rgba(11, 37, 61, .10); }
+body:not(.merch-page) .notification-card.read { background: #17364b; }
+body:not(.merch-page) .notification-card.unread::before { background: #d93c6a; }
+body:not(.merch-page) .card-tag,
+body:not(.merch-page) .card-tag::before { color: #f7a9c0; background-color: #f7a9c0; }
+body:not(.merch-page) .empty-state { color: #5d6f7d; }
+body:not(.merch-page) .empty-state h3 { color: #0d1d2a; }
+body:not(.merch-page) .status-message { background: #fce8ee; color: #9f2347; }
+body:not(.merch-page) .bottom-nav { border-top-color: #dfe8ee; }
+body:not(.merch-page) .bottom-nav a { color: #5d6f7d; }
+body:not(.merch-page) .sell-icon { border-color: #0f4c5c; }
+body:not(.merch-page) .action-button:focus-visible,
+body:not(.merch-page) .text-button:focus-visible,
+body:not(.merch-page) .back-button:focus-visible,
+body:not(.merch-page) .notification-card.has-link:focus-visible { outline-color: #d93c6a; }
+@media (min-width: 600px) {
+    body:not(.merch-page) { background: #e5eef4; }
+    body:not(.merch-page) .page { box-shadow: 0 0 15px rgba(13, 29, 42, .08); }
+}
+@media (max-width: 620px) {
+    .merch-page .banner-placeholder { box-shadow: 9px 9px 0 #f7d8e1; }
+}

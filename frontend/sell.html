@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell an item — StudentMarket</title>
+  <meta name="description" content="List textbooks, tech, furniture and res essentials for students on your campus.">
+  <meta name="theme-color" content="#0d1d2a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header id="siteNav" class="nav"></header>
+
+  <main class="wrap">
+    <section class="page-head reveal">
+      <span class="eyebrow">Sell on campus</span>
+      <h1>Pin it to the board.</h1>
+      <p>A clear photo and an honest description sell things fastest. You'll get a message in StudentMarket when someone's keen.</p>
+    </section>
+
+    <div class="sell">
+      <form class="panel" id="sellForm" novalidate>
+        <label class="drop" id="drop">
+          <input type="file" id="photo" accept="image/png,image/jpeg,image/webp">
+          <i data-lucide="image-plus"></i>
+          <b>Add a photo</b>
+          <span style="font-size:13px">Drag it here or tap to choose · JPG, PNG or WebP</span>
+        </label>
+
+        <label class="field"><span>What are you selling?</span><input name="title" required maxlength="80" placeholder="e.g. Intro to Economics, 9th edition"></label>
+
+        <div class="field-row">
+          <label class="field"><span>Category</span><select name="category" required></select></label>
+          <label class="field"><span>Price (R)</span><input name="price" type="number" min="0" max="1000000" step="1" required placeholder="250" inputmode="numeric"></label>
+        </div>
+
+        <div class="field"><span>Condition</span><div class="seg" id="cond"></div></div>
+
+        <label class="field"><span>Description</span><textarea name="description" maxlength="600" placeholder="Edition, size, any marks or faults, why you're selling…"></textarea><small><span id="descCount">0</span>/600</small></label>
+
+        <div class="field-row">
+          <label class="field"><span>Campus</span><input name="campus" required maxlength="60" placeholder="e.g. District Six" list="campusList"></label>
+          <label class="field"><span>Pickup spot</span><input name="pickup_spot" maxlength="80" placeholder="e.g. Library entrance"></label>
+        </div>
+        <datalist id="campusList"><option>District Six</option><option>Bellville</option><option>Mowbray</option><option>Granger Bay</option><option>Wellington</option></datalist>
+
+        <label class="switch"><input type="checkbox" name="open_to_swap"><i></i>I'm open to swapping for something</label>
+
+        <p class="form-msg" id="sellMsg" role="status"></p>
+        <button class="btn btn--accent btn--block" type="submit"><i data-lucide="pin"></i>Publish listing</button>
+      </form>
+
+      <aside class="preview">
+        <span class="eyebrow">Live preview</span>
+        <div id="preview"></div>
+        <div class="preview__note preview__note--rules"><i data-lucide="octagon-x"></i><span><b>Not allowed:</b> alcohol, weed and other drugs, vapes and cigarettes, adult/sex items, weapons, prescription meds, fake IDs and exam answers. Listings like this are blocked automatically and admins remove anything that slips through.</span></div>
+        <div class="preview__note"><i data-lucide="lightbulb"></i><span>Listings with a photo and a pickup spot get messages much faster. Price a little under the bookshop and it'll go quickly.</span></div>
+      </aside>
+    </div>
+  </main>
+  <footer id="siteFooter"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/sell.js"></script>
+</body>
+</html>

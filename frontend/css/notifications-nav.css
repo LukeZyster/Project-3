@@ -1,0 +1,21 @@
+/* Notification shortcut added to application headers. */
+.notification-link { position: relative; text-decoration: none; }
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -7px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    color: #fff;
+    background: #d93c6a;
+    font: 700 10px/1 'DM Sans', sans-serif;
+}
+.notification-count[hidden] { display: none; }
+@media (max-width: 760px) {
+    .site-links { flex-wrap: wrap; justify-content: flex-end; }
+}

@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Create account — StudentMarket</title>
-	<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create account — StudentMarket</title>
+  <meta name="description" content="Create your StudentMarket account.">
+  <meta name="theme-color" content="#0d1d2a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
 </head>
-<body class="auth-page">
-<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a><a href="index.html" class="quiet-link">Back home</a></header>
-<main class="auth-layout">
-	<section class="auth-intro"><p class="eyebrow">Join the campus loop</p><h1>Good finds start with good people.</h1><p>Create your account and keep every part of your StudentMarket experience together.</p></section>
-	<form class="auth-card" id="registerForm">
-		<div><p class="eyebrow">New account</p><h2>Create account</h2></div>
-		<label>Name<input type="text" id="registerName" required autocomplete="name"></label>
-		<label>Email<input type="email" id="registerEmail" required autocomplete="email"></label>
-		<label>Password<input type="password" id="registerPassword" required minlength="4" autocomplete="new-password"></label>
-		<p class="form-message" id="registerMessage" role="status"></p>
-		<button class="button button-primary" type="submit">Create account</button>
-		<p class="form-foot">Already registered? <a href="login.html">Sign in</a></p>
-	</form>
-</main>
-<script src="js/auth.js"></script><script src="js/register.js"></script>
+<body data-no-tabbar>
+  <header id="siteNav" class="nav"></header>
+
+  <main class="auth">
+    <aside class="auth__art"><div><span class="eyebrow" style="color:var(--accent-soft)">StudentMarket</span><h1 style="margin-top:16px">Your campus has stuff you need.</h1><p>Create an account to message sellers, save items and pin your own listings.</p></div><div class="auth__pins"><figure class="pin pin--1"><img src="assets/images/merch/student-tee.jpg" alt=""><figcaption>Tee <b>R120</b></figcaption></figure><figure class="pin pin--2"><img src="assets/images/merch/notebook.jpg" alt=""><figcaption>Notes <b>R60</b></figcaption></figure><figure class="pin pin--3"><img src="assets/images/merch/varsity-mug.jpg" alt=""><figcaption>Mug <b>R50</b></figcaption></figure></div></aside>
+    <section class="auth__form">
+      <form class="auth__card" id="registerForm" novalidate>
+        <span class="eyebrow">Create account</span>
+        <h2>Join StudentMarket.</h2>
+        <p class="lede">Free, takes 30 seconds.</p>
+        <label class="field"><span>Full name</span><input name="name" required maxlength="80" autocomplete="name" placeholder="e.g. Thando Mokoena"></label>
+        <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email" placeholder="you@mycput.ac.za" pattern=".+@(mycput|cput)\.ac\.za$"><small>Students use @mycput.ac.za · staff admins use @cput.ac.za</small></label>
+        <div class="field-row">
+          <label class="field"><span>Campus</span><input name="campus" maxlength="60" list="campusList" placeholder="District Six"></label>
+          <label class="field"><span>Password</span><div class="pw"><input name="password" type="password" required minlength="6" autocomplete="new-password"><button type="button" data-pw aria-label="Show password"><i data-lucide="eye"></i></button></div><small>At least 6 characters</small></label>
+        </div>
+        <datalist id="campusList"><option>District Six</option><option>Bellville</option><option>Mowbray</option><option>Granger Bay</option><option>Wellington</option></datalist>
+        <p class="form-msg" id="msg" role="status"></p>
+        <button class="btn btn--accent btn--block" type="submit"><i data-lucide="user-plus"></i>Create account</button>
+        <p class="auth__alt">Already have one? <a href="login.html" id="toLogin">Sign in</a></p>
+      </form>
+    </section>
+  </main>
+  <footer id="siteFooter"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/register.js"></script>
 </body>
 </html>

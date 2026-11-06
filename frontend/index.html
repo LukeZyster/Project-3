@@ -1,50 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>StudentMarket — Campus commerce</title>
-	<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudentMarket — buy and sell on campus</title>
+  <meta name="description" content="StudentMarket connects students who want to sell textbooks, res essentials, tech and more with students who need them.">
+  <meta name="theme-color" content="#0d1d2a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
 </head>
-<body class="site-page">
-<header class="site-header">
-	<a class="brand" href="index.html"><span class="brand-mark">S</span> StudentMarket</a>
-	<nav class="site-links" aria-label="Primary navigation">
-		<a href="merch.html">Store</a>
-		<a href="marketplace.html">Marketplace</a>
-		<a href="login.html" data-auth-link>Sign in</a>
-	</nav>
-</header>
+<body>
+  <header id="siteNav" class="nav"></header>
 
-<main>
-	<section class="home-hero">
-		<div class="hero-copy">
-			<p class="eyebrow">Buy, sell, belong</p>
-			<h1>Campus finds, without the detour.</h1>
-			<p class="hero-text">A trusted place for students to discover essentials, find second-hand gems, and meet the people behind the listings.</p>
-			<div class="hero-actions">
-				<a class="button button-primary" href="merch.html">Explore the store</a>
-				<a class="button button-secondary" href="marketplace.html">Browse marketplace</a>
-			</div>
-		</div>
-		<div class="hero-panel">
-			<span class="hero-panel-label">This week on campus</span>
-			<strong>Fresh gear.<br>Fair prices.</strong>
-			<span>Everything you need for the semester, in one place.</span>
-		</div>
-	</section>
+  <main>
+    <section class="hero">
+      <div class="wrap hero__grid">
+        <div>
+          <span class="eyebrow">The campus noticeboard, online</span>
+          <h1>Buy it from someone in your <span class="scribble">lecture.<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 60 4, 120 4, 180 10 S 270 16, 297 6"/></svg></span></h1>
+          <p class="hero__lede">Textbooks from last semester, the bar fridge from res, a calculator that survived exams. StudentMarket connects you with students selling exactly what you need — no shipping, no strangers, just a meet-up on campus.</p>
+          <form class="hero__search" action="marketplace.html" role="search">
+            <label><i data-lucide="search"></i><span class="sr-only">Search listings</span><input name="q" placeholder="What are you looking for?" autocomplete="off"></label>
+            <button class="btn btn--primary" type="submit"><span>Search</span><i data-lucide="arrow-right"></i></button>
+          </form>
+          <div class="hero__hints">Popular: <a href="marketplace.html?q=textbook">textbooks</a><a href="marketplace.html?cat=Res%20essentials">res essentials</a><a href="marketplace.html?q=calculator">calculators</a><a href="marketplace.html?swap=1">open to swap</a></div>
+          <div class="hero__proof">
+            <div class="faces"><span style="background:#0f4c5c">MK</span><span style="background:#d93c6a">JM</span><span style="background:#26394a">AN</span><span style="background:#17647a">RV</span></div>
+            <span id="heroProof">Students are listing things right now.</span>
+          </div>
+        </div>
 
-	<section class="home-section">
-		<div class="section-heading"><p class="eyebrow">Start here</p><h2>One account, every campus flow.</h2></div>
-		<div class="flow-grid">
-			<a class="flow-card" href="merch.html"><span class="flow-number">01</span><h3>Shop essentials</h3><p>Browse official merch and add your favourites to one simple cart.</p><span class="text-link">Open store →</span></a>
-			<a class="flow-card" href="marketplace.html"><span class="flow-number">02</span><h3>Find a deal</h3><p>Explore student listings and connect directly with your campus community.</p><span class="text-link">Open marketplace →</span></a>
-			<a class="flow-card" href="profile.html"><span class="flow-number">03</span><h3>Make it yours</h3><p>Keep your profile, conversations, and activity together as you go.</p><span class="text-link">View account →</span></a>
-		</div>
-	</section>
-</main>
+        <div class="board" aria-label="Pinned items">
+          <span class="board__label">Pinned this week</span>
+          <figure class="pin pin--1" data-go="marketplace.html?q=hoodie"><img src="assets/images/merch/varsity-hoodie.jpg" alt="Campus hoodie"><figcaption>Hoodie, size M <b>R280</b></figcaption></figure>
+          <figure class="pin pin--2" data-go="merch.html"><img src="assets/images/merch/varsity-mug.jpg" alt="Varsity mug"><figcaption>Varsity mug <b>R90</b></figcaption></figure>
+          <figure class="pin pin--3" data-go="merch.html"><img src="assets/images/merch/notebook.jpg" alt="Notebook"><figcaption>Notebook <b>R60</b></figcaption></figure>
+          <figure class="pin pin--4" data-go="merch.html"><img src="assets/images/merch/cap.jpg" alt="Snapback cap"><figcaption>Snapback <b>R150</b></figcaption></figure>
+          <div class="sticky sticky--a">Selling my bar fridge before exams!<small>Res block C · R1200</small><div class="tearoffs"><span></span><span></span><span></span><span></span></div></div>
+          <div class="sticky sticky--b">Swap? Econ for Stats textbook<small>Library, Tues</small></div>
+        </div>
+      </div>
+    </section>
 
-<footer class="site-footer"><span>StudentMarket</span><span>Built for campus life.</span></footer>
-<script src="js/auth.js"></script>
+    <div class="ticker" aria-label="Recently listed"><div class="ticker__track" id="ticker"></div></div>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <div><span class="eyebrow">Browse by shelf</span><h2>Whatever your semester needs.</h2></div>
+          <a class="link-arrow" href="marketplace.html">See everything <i data-lucide="arrow-right"></i></a>
+        </div>
+        <div class="cats" id="cats"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <div><span class="eyebrow">Fresh on the board</span><h2>Just listed by students.</h2></div>
+          <a class="link-arrow" href="marketplace.html">Open the marketplace <i data-lucide="arrow-right"></i></a>
+        </div>
+        <div class="grid" id="fresh">
+          <div class="skel skel--card"></div><div class="skel skel--card"></div><div class="skel skel--card"></div><div class="skel skel--card"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section__head reveal"><div><span class="eyebrow">How it works</span><h2>Three steps. One meet-up.</h2></div></div>
+        <div class="steps">
+          <div class="step reveal"><span class="step__n">01</span><span class="step__ic"><i data-lucide="camera"></i></span><h3>Snap it, price it</h3><p>Take a photo, pick a category and a fair price. Your listing is live for every student in under a minute.</p></div>
+          <div class="step reveal"><span class="step__n">02</span><span class="step__ic"><i data-lucide="messages-square"></i></span><h3>Chat in the app</h3><p>Buyers message you right here — no phone numbers needed. Agree on a price, or a swap.</p></div>
+          <div class="step reveal"><span class="step__n">03</span><span class="step__ic"><i data-lucide="map-pin"></i></span><h3>Meet on campus</h3><p>Hand it over between lectures at a spot you both know. Mark it sold and you're done.</p></div>
+        </div>
+        <div class="stats reveal">
+          <div class="stat"><b id="statListings">—</b><span>items on the board</span></div>
+          <div class="stat"><b id="statSellers">—</b><span>students selling</span></div>
+          <div class="stat"><b id="statSwap">—</b><span>open to a swap</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap split">
+        <div class="store-teaser reveal">
+          <div class="store-teaser__copy">
+            <span class="eyebrow">Official campus store</span>
+            <h2>Wear the varsity. Drink the varsity.</h2>
+            <p>Hoodies, tees, caps, mugs and notebooks from the campus store. Order here and collect at the store counter.</p>
+            <a class="btn btn--light" href="merch.html"><i data-lucide="shopping-bag"></i>Shop the store</a>
+          </div>
+          <div class="store-teaser__art">
+            <figure><img src="assets/images/merch/student-tee.jpg" alt="Student tee"></figure>
+            <figure><img src="assets/images/merch/varsity-hoodie.jpg" alt="Varsity hoodie"></figure>
+            <figure><img src="assets/images/merch/cap.jpg" alt="Snapback cap"></figure>
+          </div>
+        </div>
+        <div class="safety reveal">
+          <span class="eyebrow">Meet-up rules</span>
+          <h2>Keep it on campus, keep it easy.</h2>
+          <ul>
+            <li><i data-lucide="map-pinned"></i><span>Pick a busy spot — library entrance, student centre, the main gate.</span></li>
+            <li><i data-lucide="sun"></i><span>Meet in daylight, between lectures, ideally with a friend.</span></li>
+            <li><i data-lucide="scan-eye"></i><span>Check the item works before any money changes hands.</span></li>
+            <li><i data-lucide="message-circle"></i><span>Keep the conversation in StudentMarket chat so there's a record.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="cta reveal">
+          <div class="cta__float cta__float--a"><img src="assets/images/merch/notebook.jpg" alt=""></div>
+          <div class="cta__float cta__float--b"><img src="assets/images/merch/varsity-mug.jpg" alt=""></div>
+          <span class="eyebrow">Clearing out your room?</span>
+          <h2>Somebody in first year needs that.</h2>
+          <p>Turn last semester's stuff into this semester's data bundle. Listing is free.</p>
+          <div class="cta__actions"><a class="btn btn--accent" href="sell.html"><i data-lucide="plus"></i>List an item</a><a class="btn btn--light" href="register.html">Create an account</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="siteFooter"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

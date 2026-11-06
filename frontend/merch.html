@@ -1,214 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merch Store — StudentMarket</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/merch.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus store — StudentMarket</title>
+  <meta name="description" content="Official campus hoodies, tees, caps, mugs and notebooks. Order online, collect on campus.">
+  <meta name="theme-color" content="#0d1d2a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
 </head>
-<body class="merch-page">
+<body>
+  <header id="siteNav" class="nav"></header>
 
-<header class="app-header">
-    <a href="index.html" class="icon-btn" aria-label="Home">⌂</a>
-    <h1 class="app-title">StudentMarket</h1>
-    <a href="cart.html" class="icon-btn cart-icon-wrap" aria-label="Cart">
-        🛒
-        <span class="cart-badge" id="cartBadge" style="display:none;">0</span>
-    </a>
-</header>
+  <main class="wrap">
+    <section class="store-hero reveal">
+      <div>
+        <span class="eyebrow">Official campus store</span>
+        <h1>Varsity gear, collected on campus.</h1>
+        <p>Order online, pay at the counter, pick it up between lectures. No delivery fees, no waiting for a courier.</p>
+        <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap"><a class="btn btn--light" href="#products"><i data-lucide="arrow-down"></i>Shop the range</a><a class="btn btn--ghost" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.35)" href="cart.html"><i data-lucide="shopping-bag"></i>View cart</a></div>
+      </div>
+      <div class="store-hero__art" aria-hidden="true">
+        <img src="assets/images/merch/varsity-hoodie.jpg" alt="">
+        <img src="assets/images/merch/cap.jpg" alt="">
+        <img src="assets/images/merch/varsity-mug.jpg" alt="">
+      </div>
+    </section>
 
-<div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="searchInput" class="search-input" placeholder="Search products..." autocomplete="off">
-</div>
+    <section class="section" id="products" style="padding-top:56px">
+      <div class="section__head">
+        <div><span class="eyebrow">The range</span><h2>Five things every student ends up owning.</h2></div>
+        <div class="chips" id="merchCats"></div>
+      </div>
+      <div class="grid" id="merchGrid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr))">
+        <div class="skel skel--card"></div><div class="skel skel--card"></div><div class="skel skel--card"></div><div class="skel skel--card"></div>
+      </div>
+    </section>
 
-<nav class="category-pills" id="categoryPills">
-    <button class="pill active" data-category="All">All Items</button>
-    <button class="pill" data-category="Clothing">Clothing</button>
-    <button class="pill" data-category="Drinkware">Drinkware</button>
-    <button class="pill" data-category="Stationery">Stationery</button>
-</nav>
+    <section class="section">
+      <div class="panel" style="padding:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px">
+        <div style="display:flex;gap:12px"><i data-lucide="store" style="color:var(--blue)"></i><div><b>Collect in store</b><p class="muted" style="font-size:14px">Ready within one working day.</p></div></div>
+        <div style="display:flex;gap:12px"><i data-lucide="wallet" style="color:var(--blue)"></i><div><b>Pay at the counter</b><p class="muted" style="font-size:14px">Card or cash when you collect.</p></div></div>
+        <div style="display:flex;gap:12px"><i data-lucide="repeat" style="color:var(--blue)"></i><div><b>Wrong size?</b><p class="muted" style="font-size:14px">Swap it at the store within 14 days.</p></div></div>
+      </div>
+    </section>
+  </main>
+  <footer id="siteFooter"></footer>
 
-<section class="featured-banner">
-    <div class="banner-placeholder">Featured Banner Placeholder</div>
-</section>
-
-<section class="section">
-    <div class="section-header">
-        <h2>Popular Items</h2>
-        <a href="#popularGrid" class="section-link">View All</a>
-    </div>
-    <div class="product-grid" id="popularGrid">
-
-        <!-- Campus Hoodie -->
-        <article class="product-card" data-category="Clothing">
-            <div class="product-card-image">
-                <img src="assets/images/merch/varsity-hoodie.jpg" alt="Campus Hoodie">
-            </div>
-            <div class="product-card-body">
-                <div class="product-name">Campus Hoodie</div>
-                <div class="product-price">R499.99</div>
-                <button class="add-to-cart">
-                    <span>Add to Cart</span>
-                    <span class="heart">♡</span>
-                </button>
-            </div>
-        </article>
-
-        <!-- Student Tee -->
-        <article class="product-card" data-category="Clothing">
-            <div class="product-card-image">
-                <img src="assets/images/merch/student-tee.jpg" alt="Student Tee">
-            </div>
-            <div class="product-card-body">
-                <div class="product-name">Student Tee</div>
-                <div class="product-price">R199.99</div>
-                <button class="add-to-cart">
-                    <span>Add to Cart</span>
-                    <span class="heart">♡</span>
-                </button>
-            </div>
-        </article>
-
-        <!-- Coffee Mug -->
-        <article class="product-card" data-category="Drinkware">
-            <div class="product-card-image">
-                <img src="assets/images/merch/varsity-mug.jpg" alt="Coffee Mug">
-            </div>
-            <div class="product-card-body">
-                <div class="product-name">Coffee Mug</div>
-                <div class="product-price">R89.99</div>
-                <button class="add-to-cart">
-                    <span>Add to Cart</span>
-                    <span class="heart">♡</span>
-                </button>
-            </div>
-        </article>
-
-        <!-- Notebook -->
-        <article class="product-card" data-category="Stationery">
-            <div class="product-card-image">
-                <img src="assets/images/merch/notebook.jpg" alt="Notebook">
-            </div>
-            <div class="product-card-body">
-                <div class="product-name">Notebook</div>
-                <div class="product-price">R59.99</div>
-                <button class="add-to-cart">
-                    <span>Add to Cart</span>
-                    <span class="heart">♡</span>
-                </button>
-            </div>
-        </article>
-
-    </div>
-</section>
-
-<section class="shop-banner">
-    <div class="shop-banner-image"></div>
-    <div class="shop-banner-content">
-        <div class="shop-banner-text">
-            <div class="shop-banner-title">Campus Essentials</div>
-            <div class="shop-banner-sub">Everything you need for the semester</div>
-        </div>
-        <button class="shop-now-btn" type="button">Shop Now</button>
-    </div>
-</section>
-
-<section class="section">
-    <div class="product-grid" id="secondGrid">
-
-        <!-- Snapback Cap -->
-        <article class="product-card" data-category="Clothing">
-            <div class="product-card-image">
-                <img src="assets/images/merch/cap.jpg" alt="Snapback Cap">
-            </div>
-            <div class="product-card-body">
-                <div class="product-name">Snapback Cap</div>
-                <div class="product-price">R149.99</div>
-                <button class="add-to-cart">
-                    <span>Add to Cart</span>
-                    <span class="heart">♡</span>
-                </button>
-            </div>
-        </article>
-
-    </div>
-</section>
-
-<section class="section">
-    <div class="section-header">
-        <h2>New Listings</h2>
-    </div>
-    <div class="new-listings" id="newListings">
-
-        <article class="listing-card">
-            <div class="listing-card-image" style="background-image:url('assets/images/merch/varsity-hoodie.jpg')"></div>
-            <div class="listing-card-body">
-                <div class="listing-card-name">Campus Hoodie</div>
-                <div class="listing-card-price">R499.99</div>
-            </div>
-        </article>
-
-        <article class="listing-card">
-            <div class="listing-card-image" style="background-image:url('assets/images/merch/student-tee.jpg')"></div>
-            <div class="listing-card-body">
-                <div class="listing-card-name">Student Tee</div>
-                <div class="listing-card-price">R199.99</div>
-            </div>
-        </article>
-
-        <article class="listing-card">
-            <div class="listing-card-image" style="background-image:url('assets/images/merch/varsity-mug.jpg')"></div>
-            <div class="listing-card-body">
-                <div class="listing-card-name">Coffee Mug</div>
-                <div class="listing-card-price">R89.99</div>
-            </div>
-        </article>
-
-        <article class="listing-card">
-            <div class="listing-card-image" style="background-image:url('assets/images/merch/notebook.jpg')"></div>
-            <div class="listing-card-body">
-                <div class="listing-card-name">Notebook</div>
-                <div class="listing-card-price">R59.99</div>
-            </div>
-        </article>
-
-        <article class="listing-card">
-            <div class="listing-card-image" style="background-image:url('assets/images/merch/cap.jpg')"></div>
-            <div class="listing-card-body">
-                <div class="listing-card-name">Snapback Cap</div>
-                <div class="listing-card-price">R149.99</div>
-            </div>
-        </article>
-
-    </div>
-</section>
-
-<div class="bottom-spacer"></div>
-
-<button class="fab" id="fabAdd" title="Add product">+</button>
-
-<nav class="bottom-nav">
-    <a href="merch.html" class="bottom-nav-item active">
-        <span class="bn-icon">🏪</span>
-        <span class="bn-label">Store</span>
-    </a>
-    <a href="chat.html" class="bottom-nav-item">
-        <span class="bn-icon">💬</span>
-        <span class="bn-label">Chat</span>
-    </a>
-    <a href="marketplace.html" class="bottom-nav-item sell-item" aria-label="Marketplace">
-        <span class="bn-icon">➕</span>
-    </a>
-    <a href="profile.html" class="bottom-nav-item">
-        <span class="bn-icon">👤</span>
-        <span class="bn-label">Account</span>
-    </a>
-</nav>
-
-<script src="js/api.js?v=3"></script>
-<script src="js/auth.js"></script>
-<script src="js/merch.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/merch.js"></script>
 </body>
 </html>

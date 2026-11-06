@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications — StudentMarket</title>
+  <meta name="description" content="Your StudentMarket notifications.">
+  <meta name="theme-color" content="#0d1d2a">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header id="siteNav" class="nav"></header>
+
+  <main class="wrap">
+    <section class="page-head reveal" style="display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px;max-width:780px">
+      <div><span class="eyebrow">Notifications</span><h1>What's new.</h1><p id="noteSummary">Messages, saves on your listings and store orders.</p></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn--ghost btn--sm" id="readAll"><i data-lucide="check-check"></i>Mark all read</button>
+        <button class="btn btn--danger btn--sm" id="clearAll"><i data-lucide="trash-2"></i>Clear</button>
+      </div>
+    </section>
+    <div class="chips" style="margin-bottom:18px" id="noteFilters">
+      <button class="chip is-active" data-f="all">All</button>
+      <button class="chip" data-f="unread">Unread</button>
+      <button class="chip" data-f="message"><i data-lucide="message-circle"></i>Messages</button>
+      <button class="chip" data-f="saved"><i data-lucide="heart"></i>Saves</button>
+      <button class="chip" data-f="order"><i data-lucide="shopping-bag"></i>Orders</button>
+    </div>
+    <div class="notes" id="notes"><div class="skel" style="height:78px"></div><div class="skel" style="height:78px"></div><div class="skel" style="height:78px"></div></div>
+  </main>
+  <footer id="siteFooter"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/notifications.js"></script>
+</body>
+</html>

@@ -1,12 +1,14 @@
 const api = (() => {
-	const host = window.location.hostname || 'localhost';
-	const baseUrl = (window.API_BASE_URL || `${window.location.protocol}//${host}:8080/api`).replace(/\/$/, '');
+	const isLocalDevelopment = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+	const productionBaseUrl = 'https://project-3-iykb.onrender.com/api';
+	const baseUrl = (window.API_BASE_URL || (isLocalDevelopment ? 'http://localhost:8080/api' : productionBaseUrl)).replace(/\/$/, '');
 
 	async function request(path, options = {}) {
-		const headers = { ...(options.headers || {}) };
-		if (options.body) headers['Content-Type'] = 'application/json';
 		const response = await fetch(`${baseUrl}${path.startsWith('/') ? path : `/${path}`}`, {
-			headers,
+			headers: {
+				'Content-Type': 'application/json',
+				...(options.headers || {})
+			},
 			...options
 		});
 
