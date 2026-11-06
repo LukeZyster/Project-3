@@ -10,7 +10,11 @@ const MERCH_IMAGE_BY_NAME = [
   { pattern: /\btee\b|t-shirt/, path: 'assets/images/merch/student-tee.jpg' },
   { pattern: /mug/, path: 'assets/images/merch/varsity-mug.jpg' },
   { pattern: /notebook|planner/, path: 'assets/images/merch/notebook.jpg' },
-  { pattern: /cap/, path: 'assets/images/merch/cap.jpg' }
+  { pattern: /cap/, path: 'assets/images/merch/cap.jpg' },
+  { pattern: /laptop sleeve|laptop case/, path: 'assets/images/merch/laptop-sleeve.jpg' },
+  { pattern: /water bottle/, path: 'assets/images/merch/water-bottle.jpg' },
+  { pattern: /socks?/, path: 'assets/images/merch/campus-socks.jpg' },
+  { pattern: /highlighter|marker/, path: 'assets/images/merch/highlighter-pack.jpg' }
 ];
 const DEMO_ITEMS = [
   { id: 9001, name: 'Campus Hoodie', description: 'Official university hoodie with an embroidered crest.', price: 499.99, category: 'Clothing', stock: 12 },
